@@ -1,0 +1,11 @@
+asgiref==3.2.3
+behave==1.2.6
+Django==3.0.3
+parse==1.14.0
+parse-type==0.5.2
+pytz==2019.3
+selenium==3.141.0
+six==1.14.0
+splinter==0.13.0
+sqlparse==0.3.0
+urllib3==1.25.8
