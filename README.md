@@ -5,7 +5,7 @@ The main idea of the project is to develop a web app that matches companies and 
 Each company will post job offers, that can be visualized by applicants. Both applicants and companies will navigate through job offers and applicants respectively and they will "like" or "nope" them. In match case both will get contact data of each other. 
 
 Applicants as well as job offers are related to a certain scope.
-###Entities
+### Entities
 * Company
 * Applicant
 * JobOffer
@@ -22,10 +22,12 @@ We define the intended functions:
 * Register job offer.
 * List applicants to companies.
 * List job offers to applicants.
+* 'LIKE' Job Offers/Applicants.
+* 'NOPE' Job Offers/Applicants.
 * Edit own profile by companies and applicants.
 * Delete job offers.
 
-###Views
+### Views
 
 * Login / Register view: user as applicant or company must sign up/in in order to access the application. 
 Without this, the application cannot be used. 
@@ -36,9 +38,28 @@ Without this, the application cannot be used.
 
 ![alt-text](media/views.png)
 
-###TO-DO list
+### TO-DO list
 
-####Authors
-[Genov Draganova, Aleks](https://github.com/AleksSG)
+- [ ] Login / Register
+    - [ ] (O) Email verification
+    - [ ] (O) Ask for user first, then password
+    - [ ] After register require profile description
+- [ ] Profile section
+    - [ ] Allow edit profile 
+    - [ ] Show current matches
+    - [ ] Company: register and modify own Job Offers
+- [ ] Search section
+    - [ ] Implement search algorithm
+    - [ ] Allow 'LIKE' & 'NOPE' users
+- [ ] Match applicants-companies
+    - [ ] Show contact data
+    - [ ] (O) Send notification to email 
+    - [ ] (O) Communication / Chat
+- [ ] Predefine scopes and respective themes.
 
-[Uali, Bilal](https://github.com/bilaluali)
+
+
+#### Authors
+* [Genov Draganova, Aleks](https://github.com/AleksSG)
+
+* [Uali, Bilal](https://github.com/bilaluali)
