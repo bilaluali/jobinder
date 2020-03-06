@@ -24,10 +24,10 @@ class Company(User):
 class JobOffer(models.Model):
     name = models.CharField(blank=False, null=False, max_length=30)
     company = models.ForeignKey(Company, related_name="joboffers", on_delete=models.CASCADE)
-    theme = models.ForeignKey(Theme, related_name="joboffers", on_delete=models.SET_NULL)
+    theme = models.ForeignKey(Theme, null=True, related_name="joboffers", on_delete=models.SET_NULL)
     description = models.TextField()
 
-    modified_by = models.ForeignKey(User, null=True, related_name="companies", on_delete=models.SET_NULL)
+    modified_by = models.ForeignKey(User, null=True, related_name="joboffers_mod", on_delete=models.SET_NULL)
     deleted = models.BooleanField(default=False, null=False)
     last_modified = models.DateField(auto_now=True)
 
