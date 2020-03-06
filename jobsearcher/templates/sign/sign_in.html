@@ -2,9 +2,12 @@
 {% load static %}
 
 {% block body_block %}
-
     <div>
-        <a>Logeandoo</a>
+        <form method="POST">
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-success" value="Sign In" />
+            {% csrf_token %}
+        </form>
     </div>
 
 {% endblock %}

@@ -1,3 +1,7 @@
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login as do_login
+from django.contrib.auth import logout as do_logout
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -14,6 +18,30 @@ def is_signed(request):
     if request.user.is_authenticated:
         return redirect(reverse('jobsearcher:index'))
     return False
+
+
+def sign_in(request):
+    is_already_signed = is_signed(request)
+
+    if is_already_signed is not False:
+        return is_already_signed
+
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                do_login(request, user)
+                return redirect(reverse('jobsearcher:sign_in'))
+
+    else:
+        form = AuthenticationForm()
+
+    args = {'form': form}
+    return render(request, "sign/sign_in.html", args)
 
 
 def sign_up(request):
@@ -33,3 +61,7 @@ def sign_up(request):
     args = {'form': form}
     return render(request, 'sign/sign_up.html', args)
 
+
+def sign_out(request):
+    do_logout(request)
+    return redirect('/')

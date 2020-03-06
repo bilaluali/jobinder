@@ -26,5 +26,7 @@ urlpatterns = [
     path('jobsearcher/', include(('jobsearcher.urls', 'jobsearcher'),namespace='jobsearcher')),
     path('signup/', jobsearcher.views.sign_up, name='sign_up'),
     path('signup_done/', TemplateView.as_view(template_name='sign/signup_done.html'), name='signup_done'),
+    path('signin/',jobsearcher.views.sign_in, name='sign_in'),
+    path('signout/',jobsearcher.views.sign_out, name='sign_out'),
 
 ]
