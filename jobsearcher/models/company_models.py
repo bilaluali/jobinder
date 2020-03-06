@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from jobsearcher.models import Scope
+from jobsearcher.models import *
 
 
 class Company(User):
@@ -19,3 +19,20 @@ class Company(User):
 
     class Meta:
         default_related_name = "Company"
+
+
+class JobOffer(models.Model):
+    name = models.CharField(blank=False, null=False, max_length=30)
+    company = models.ForeignKey(Company, related_name="joboffers", on_delete=models.CASCADE)
+    theme = models.ForeignKey(Theme, related_name="joboffers", on_delete=models.SET_NULL)
+    description = models.TextField()
+
+    modified_by = models.ForeignKey(User, null=True, related_name="companies", on_delete=models.SET_NULL)
+    deleted = models.BooleanField(default=False, null=False)
+    last_modified = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        default_related_name = "JobOffer"
