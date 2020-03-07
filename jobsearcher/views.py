@@ -36,7 +36,6 @@ def sign_in(request):
             if user is not None:
                 do_login(request, user)
                 return redirect(reverse('jobsearcher:sign_in'))
-
     else:
         form = AuthenticationForm()
 
@@ -55,6 +54,7 @@ def sign_up(request):
         if form.is_valid():
             form.save()
             return redirect(reverse('signup_done'))
+
     else:
         form = CompanyForm()
 

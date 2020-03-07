@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from jobsearcher.models import Company
+from jobsearcher.models import Company, Scope
 
 
 class CompanyForm(UserCreationForm):
@@ -13,12 +13,13 @@ class CompanyForm(UserCreationForm):
             'email',
             'password1',
             'password2',
+            'telephone',
+            'city',
+            'zipCode',
+            'url',
         )
-        labels = {
-            'username': 'Company',
-            'password1': 'Create Password',
-            'password2': 'Confirm Password',
-        }
+
+
 
     '''def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)

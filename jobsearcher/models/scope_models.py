@@ -9,7 +9,7 @@ class Scope(models.Model):
         HC = ('HC', 'HealthCare')
         LW = ('LW', 'Law')
 
-    name = models.CharField(max_length=30,choices=Area.choices,default=Area.IT)
+    name = models.CharField(max_length=30, choices=Area.choices, default=Area.IT)
 
     def __str__(self):
         return self.name

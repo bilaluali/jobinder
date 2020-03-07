@@ -7,6 +7,7 @@ from jobsearcher.models import *
 class Company(User):
     telephone = models.CharField(blank=True, null=True, max_length=50)
     city = models.CharField(blank=True, null=True,max_length=50)
+    zipCode = models.CharField(blank=True, null=True,max_length=16)
     url = models.URLField(blank=True, null=True)
     scope = models.ForeignKey(Scope, null=True, related_name="companies", on_delete=models.SET_NULL)
 
