@@ -3,13 +3,53 @@
 
 {% block body_block %}
 
-    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white mx-3">
+        <a style="font-size: xx-large" class="navbar-brand text-primary font-weight-bold mx-2" href="{% url 'home' %}">Jobinder</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div>
-            <h1>Jobinder</h1>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item active mx-2">
+                        <a class="nav-link btn btn-outline-secondary btn-sm">Profile</a>
+                    </li>
+                    <li class="nav-item active mx-2">
+                        <a class="nav-link btn btn-outline-secondary btn-sm" href="{% url 'sign_out' %}">Sign Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active mx-2">
+                        <a class="nav-link btn btn-outline-secondary btn-sm" href="{% url 'sign_in' %}">Sign In</a>
+                    </li>
+                    <li class="nav-item active mx-2">
+                        <a class="nav-link btn btn-outline-secondary btn-sm" href="#">Employers</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-        <a href="{% url 'sign_up_company' %}">Sign Up</a>
-        <a href="{% url 'sign_in' %}">Sign In</a>
+    </nav>
+
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-sm-6 p-3">
+                <h2 class="text-secondary font-weight-bold">
+                    Get a job that <span class="text-warning">fits you</span> in few switches.
+                </h2>
+                <h6 class="text-muted mb-5">
+                    Navigate only through job offers according your scope easily.
+                    <br>Match with companies and get and interview.
+                </h6>
+                <div id="login_link">
+                    <a class="btn btn-outline-warning" href="{% url 'sign_up_applicant' %}">
+                        Get Started, it's free
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-6 p-5">
+                WORLD
+            </div>
+        </div>
     </div>
 
 {% endblock %}

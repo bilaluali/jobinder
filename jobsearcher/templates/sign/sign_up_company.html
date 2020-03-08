@@ -3,23 +3,23 @@
 
 {% block body_block %}
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-        <a class="navbar-brand text-white font-weight-bold" href="{% url 'home' %}">Jobinder</a>
+    <div class="container my-5">
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link btn btn-outline-light" href="{% url 'sign_in' %}">Sign In</a>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="text-center text-primary font-weight-bold">
+                    <a style="text-decoration:none" href="{% url 'home' %}">Jobinder</a>
+                </h3>
             </div>
         </div>
-    </nav>
 
-    <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-sm-6">
+            <div class="col-sm-6 shadow p-3 bg-white rounded">
+
+                <div class="my-4" id="signup_text">
+                    <h4 class="font-weight-bold">Sign Up</h4>
+                </div>
+
                 <form method="post">
 
                     <div class="form-group" id="company">
@@ -45,13 +45,13 @@
                         <input name="password2" type="password" class="form-control" id="passwd2">
                     </div>
 
-                    <div class="d-flex mb-3">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="extra_info" onclick="displayExtraInfo()">
-                            <label class="custom-control-label text-muted" for="extra_info">
-                                Add extra information, we'll offer you more precise applicants.
-                            </label>
-                        </div>
+
+                    <div class="col-12 mb-3">
+                        <label class=" text-muted" for="extra_info">
+                            Add extra information, we'll offer you more precise applicants.
+                        </label>
+                        <input type="button"  id="extra_info" onclick="displayExtraInfo()"
+                               style="color: orange;" class="fa btn btn-light" value="&#xf0fe">
                     </div>
 
                     <div class="form-group" id="phone" style="display:none">
@@ -81,6 +81,10 @@
                         </small>
                     </div>
 
+                    <div class="d-flex my-5">
+                        <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Sign Up"/>
+                    </div>
+
                     {% if form.username.errors %}
                         {% for error in form.username.errors %}
                             <p>{{ error|escape }}</p>
@@ -102,11 +106,14 @@
                         {% endfor %}
                     {% endif %}
 
-                    <div class="d-flex my-5 justify-content-end">
-                        <input type="submit" class="btn btn-outline-warning" value="Sign Up"/>
-                    </div>
                     {% csrf_token %}
                 </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-center my-5">
+            <div class="col-sm-12 text-center">
+                <a href="{% url 'sign_in' %}" class="text-muted">Sign In</a>
             </div>
         </div>
 
@@ -114,23 +121,26 @@
         <script type="text/javascript">
 
             function displayExtraInfo() {
-                var button = document.getElementById("extra_info");
                 var phone_field = document.getElementById("phone");
                 var city_field = document.getElementById("city");
                 var zip_field = document.getElementById("zip");
                 var url_field = document.getElementById("url");
 
-                // If the checkbox is checked, display extra fields.
-                if (button.checked == true) {
-                    phone_field.style.display = "block";
-                    city_field.style.display = "block";
-                    zip_field.style.display = "block";
-                    url_field.style.display = "block";
-                } else {
+                if (phone_field.style.display == "block" &&
+                    city_field.style.display == "block" &&
+                    zip_field.style.display == "block" &&
+                    url_field.style.display == "block")
+                {
                     phone_field.style.display = "none";
                     city_field.style.display = "none";
                     zip_field.style.display = "none";
                     url_field.style.display = "none";
+                }
+                else {
+                    phone_field.style.display = "block";
+                    city_field.style.display = "block";
+                    zip_field.style.display = "block";
+                    url_field.style.display = "block";
                 }
             }
         </script>

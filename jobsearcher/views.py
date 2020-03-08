@@ -3,12 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth import logout as do_logout
-from django.shortcuts import render, redirect
+from django.db.models import Q
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse
 
 from jobsearcher.forms import CompanyForm, ApplicantForm
+from jobsearcher.models import Company
 
 
 def index(request):
@@ -36,7 +38,7 @@ def sign_in(request):
 
             if user is not None:
                 do_login(request, user)
-                return redirect(reverse('jobsearcher:company_profile'))
+                return redirect(reverse('home'))
     else:
         form = AuthenticationForm()
 
@@ -90,4 +92,6 @@ def sign_out(request):
 
 @login_required(login_url='/signin/')
 def company_profile(request):
-    pass
+    company = get_object_or_404(Company, Q(id=request.user.id))
+    context = {'company': company}
+    return render(request, 'profile/company_profile.html', context)

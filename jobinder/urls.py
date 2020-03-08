@@ -21,6 +21,7 @@ import jobsearcher
 
 
 urlpatterns = [
+
     path('', RedirectView.as_view(pattern_name='jobsearcher:index'), name='home'),
     path('admin/', admin.site.urls),
     path('jobsearcher/', include(('jobsearcher.urls', 'jobsearcher'),namespace='jobsearcher')),
