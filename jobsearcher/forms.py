@@ -1,10 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from jobsearcher.models import Company, Scope
+from jobsearcher.models import Company, Scope, Applicant
 
 
 class CompanyForm(UserCreationForm):
-    email = forms.EmailField(required=True, label='Email Address')
+    email = forms.EmailField(required=True)
 
     class Meta:
         model = Company
@@ -20,10 +20,21 @@ class CompanyForm(UserCreationForm):
         )
 
 
+class ApplicantForm(UserCreationForm):
+    email = forms.EmailField(required=True)
 
-    '''def save(self, commit=True):
-        user = super(UserCreationForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        if commit:
-            user.save()
-        return user'''
+    class Meta:
+        model = Applicant
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password1',
+            'password2',
+            'telephone',
+            'city',
+            'zipCode',
+            'description',
+        )
+

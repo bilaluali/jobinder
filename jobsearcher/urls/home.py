@@ -10,6 +10,6 @@ urlpatterns = [
 
     # Index Page: /jobsearcher
     path('', views.index, name='index'),
-    path('profile/', TemplateView.as_view(template_name='profile/profile_detail.html'), name='sign_in'),
+    path('profile/', TemplateView.as_view(template_name='profile/profile_detail.html'), name='company_profile'),
 
 ]

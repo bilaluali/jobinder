@@ -17,15 +17,26 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-sm-6">
                 <form method="post">
 
-                    <div class="form-group" id="company">
-                        <label class="font-weight-bold" for="company_name">Company</label>
-                        <input name="username" type="text" class="form-control" id="company_name">
+                    <div class="form-group" id="username">
+                        <label class="font-weight-bold" for="username">Username</label>
+                        <input name="username" type="text" class="form-control" id="username">
                         <small id="user_help" class="form-text text-muted">You will use this to Sign In.</small>
+                    </div>
+
+                    <div class="form-row" id="name">
+                        <div class="form-group col-sm-6" id="fname">
+                            <label class="font-weight-bold" for="fname">First name</label>
+                            <input name="first_name" type="text" class="form-control" id="fname">
+                        </div>
+                        <div class="form-group col-sm-6" id="lname">
+                            <label class="font-weight-bold" for="lname">Last name</label>
+                            <input name="last_name" type="text" class="form-control" id="lname">
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -45,11 +56,11 @@
                         <input name="password2" type="password" class="form-control" id="passwd2">
                     </div>
 
-                    <div class="d-flex mb-5">
+                    <div class="d-flex mb-3">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" id="extra_info" onclick="displayExtraInfo()">
                             <label class="custom-control-label text-muted" for="extra_info">
-                                Add extra information, we'll offer you more precise applicants.
+                                Add extra information, we'll offer you more precise job offers.
                             </label>
                         </div>
                     </div>
@@ -63,6 +74,9 @@
                         <div class="form-group col-sm-6" id="city" style="display:none">
                             <label class="font-weight-bold" for="city">City</label>
                             <input name="city" type="text" class="form-control" id="city">
+                            <small id="city_help" class="form-text text-muted">
+                                We'll offer you applicants closer you.
+                            </small>
                         </div>
                         <div class="form-group col-sm-6" id="zip" style="display:none">
                             <label class="font-weight-bold" for="zip">Zip Code</label>
@@ -70,9 +84,12 @@
                         </div>
                     </div>
 
-                    <div class="form-group" id="url" style="display:none">
-                        <label class="font-weight-bold" for="company_url">Url website</label>
-                        <input name="url" type="url" class="form-control" id="company_url">
+                    <div class="form-group" id="description" style="display:none">
+                        <label class="font-weight-bold" for="description">Description</label>
+                        <textarea name="description" class="form-control" id="description" rows="4"></textarea>
+                        <small id="desc_help" class="form-text text-muted">
+                            Let companies know more about you.
+                        </small>
                     </div>
 
                     {% if form.username.errors %}
@@ -96,7 +113,9 @@
                         {% endfor %}
                     {% endif %}
 
-                    <input type="submit" class="btn btn-outline-warning" value="Sign Up"/>
+                    <div class="d-flex my-5 justify-content-end">
+                        <input type="submit" class="btn btn-outline-warning" value="Sign Up"/>
+                    </div>
 
                     {% csrf_token %}
                 </form>
@@ -111,19 +130,19 @@
                 var phone_field = document.getElementById("phone");
                 var city_field = document.getElementById("city");
                 var zip_field = document.getElementById("zip");
-                var url_field = document.getElementById("url");
+                var desc_field = document.getElementById("description");
 
                 // If the checkbox is checked, display extra fields.
                 if (button.checked == true) {
                     phone_field.style.display = "block";
                     city_field.style.display = "block";
                     zip_field.style.display = "block";
-                    url_field.style.display = "block";
+                    desc_field.style.display = "block";
                 } else {
                     phone_field.style.display = "none";
                     city_field.style.display = "none";
                     zip_field.style.display = "none";
-                    url_field.style.display = "none";
+                    desc_field.style.display = "none";
                 }
             }
         </script>

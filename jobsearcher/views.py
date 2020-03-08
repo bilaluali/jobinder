@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from django.urls import reverse
 
-from jobsearcher.forms import CompanyForm
+from jobsearcher.forms import CompanyForm, ApplicantForm
 
 
 def index(request):
@@ -35,7 +35,7 @@ def sign_in(request):
 
             if user is not None:
                 do_login(request, user)
-                return redirect(reverse('jobsearcher:sign_in'))
+                return redirect(reverse('jobsearcher:company_profile'))
     else:
         form = AuthenticationForm()
 
@@ -43,7 +43,7 @@ def sign_in(request):
     return render(request, "sign/sign_in.html", args)
 
 
-def sign_up(request):
+def sign_up_company(request):
     is_already_signed = is_signed(request)
 
     if is_already_signed is not False:
@@ -59,7 +59,27 @@ def sign_up(request):
         form = CompanyForm()
 
     args = {'form': form}
-    return render(request, 'sign/sign_up.html', args)
+    return render(request, 'sign/sign_up_company.html', args)
+
+
+def sign_up_applicant(request):
+    is_already_signed = is_signed(request)
+
+    if is_already_signed is not False:
+        return is_already_signed
+
+    if request.method == "POST":
+        form = ApplicantForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('signup_done'))
+        else:
+            print("INVALIIID")
+    else:
+        form = ApplicantForm()
+
+    args = {'form': form}
+    return render(request, 'sign/sign_up_applicant.html', args)
 
 
 def sign_out(request):

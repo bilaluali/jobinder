@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import RedirectView,TemplateView
+from django.views.generic import RedirectView, TemplateView
 
 import jobsearcher
 
@@ -24,9 +24,10 @@ urlpatterns = [
     path('', RedirectView.as_view(pattern_name='jobsearcher:index'), name='home'),
     path('admin/', admin.site.urls),
     path('jobsearcher/', include(('jobsearcher.urls', 'jobsearcher'),namespace='jobsearcher')),
-    path('signup/', jobsearcher.views.sign_up, name='sign_up'),
+    path('company/signup/', jobsearcher.views.sign_up_company, name='sign_up_company'),
+    path('applicant/signup/', jobsearcher.views.sign_up_applicant, name='sign_up_applicant'),
     path('signup_done/', TemplateView.as_view(template_name='sign/signup_done.html'), name='signup_done'),
-    path('signin/',jobsearcher.views.sign_in, name='sign_in'),
+    path('signin/', jobsearcher.views.sign_in, name='sign_in'),
     path('signout/',jobsearcher.views.sign_out, name='sign_out'),
 
 ]
