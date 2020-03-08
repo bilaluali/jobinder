@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth import logout as do_logout
@@ -85,3 +86,8 @@ def sign_up_applicant(request):
 def sign_out(request):
     do_logout(request)
     return redirect('/')
+
+
+@login_required(login_url='/signin/')
+def company_profile(request):
+    pass
