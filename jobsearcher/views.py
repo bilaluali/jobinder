@@ -104,6 +104,26 @@ def show_joboffers(request):
 
 
 @login_required()
+def create_joboffer(request):
+
+    if request.method == "POST":
+        form = JobOfferForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('home'))
+    else:
+        form = JobOfferForm()
+
+    args = {'form': form}
+    return render(request, 'profile/joboffer_form.html', args)
+
+
+@login_required()
+def joboffer_detail(request, pk):
+    pass
+
+
+@login_required()
 def edit_joboffer(request,pk):
     joboffer = get_object_or_404(JobOffer, Q(pk=pk) & Q(company__id=request.user.id))
 
@@ -123,16 +143,6 @@ def edit_joboffer(request,pk):
 
 
 @login_required()
-def create_joboffer(request):
-
-    if request.method == "POST":
-        form = JobOfferForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse('home'))
-    else:
-        form = JobOfferForm()
-
-    args = {'form': form}
-    return render(request, 'profile/joboffer_form.html', args)
+def joboffer_delete(request, pk):
+    pass
 
