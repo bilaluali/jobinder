@@ -8,9 +8,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse
+from django.utils import timezone
 
-from jobsearcher.forms import CompanyForm, ApplicantForm
-from jobsearcher.models import Company
+from jobsearcher.forms import CompanyForm, ApplicantForm, JobOfferForm
+from jobsearcher.models import Company, JobOffer
 
 
 def index(request):
@@ -43,7 +44,7 @@ def sign_in(request):
         form = AuthenticationForm()
 
     args = {'form': form}
-    return render(request, "sign/sign_in.html", args)
+    return render(request, 'sign/sign_in.html', args)
 
 
 def sign_up_company(request):
@@ -76,8 +77,6 @@ def sign_up_applicant(request):
         if form.is_valid():
             form.save()
             return redirect(reverse('signup_done'))
-        else:
-            print("INVALIIID")
     else:
         form = ApplicantForm()
 
@@ -90,8 +89,50 @@ def sign_out(request):
     return redirect('/')
 
 
-@login_required(login_url='/signin/')
+@login_required()
 def company_profile(request):
     company = get_object_or_404(Company, Q(id=request.user.id))
     context = {'company': company}
     return render(request, 'profile/company_profile.html', context)
+
+
+@login_required()
+def show_joboffers(request):
+    joboffers_list = JobOffer.objects.filter(Q(last_modified__lte=timezone.now()) & Q(company__id=request.user.id)).order_by('-last_modified')
+    context = {'joboffers_list': joboffers_list}
+    return render(request, 'profile/profile_joboffers.html', context)
+
+
+@login_required()
+def edit_joboffer(request,pk):
+    joboffer = get_object_or_404(JobOffer, Q(pk=pk) & Q(company__id=request.user.id))
+
+    if request.method == 'POST':
+        form = JobOfferForm(request.POST, instance=joboffer)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            form.company = request.user.username
+            instance.save()
+            return redirect(reverse('home'))
+    else:
+        form = JobOfferForm(instance=joboffer)
+
+    args = {'form': form}
+    return render(request, 'profile/joboffer_form.html', args)
+
+
+@login_required()
+def create_joboffer(request):
+
+    if request.method == "POST":
+        form = JobOfferForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('home'))
+    else:
+        form = JobOfferForm()
+
+    args = {'form': form}
+    return render(request, 'profile/joboffer_form.html', args)
+

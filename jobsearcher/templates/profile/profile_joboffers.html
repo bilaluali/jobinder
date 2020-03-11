@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_block %}
+
+    <div class="col-sm-9">
+        <div class="mb-5">
+            <h4 class="font-weight-bold">JobOffers<sup>{{ joboffers_list | length }}</sup></h4>
+        </div>
+        {% for offer in joboffers_list %}
+            <div class="card py-1 mb-3">
+
+                <div class="row no-gutters align-items-center">
+                    <div class="col-sm-2 border-right text-center">
+                        <span style="font-size: 36px; color: orange;">
+                          <i class="card-image fab fa-aws"></i>
+                        </span>
+                    </div>
+
+                    <div class="col-sm-10">
+
+                        <div class="card-body">
+                            <div class="row no-gutters">
+                                <h6 class="card-title">{{ offer.name }}</h6>
+                                <small class="ml-3">{{ offer.theme }}</small>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="card-text">
+                                        <small class="text-muted">{{ offer.description | truncatechars:85 }}</small>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-6 mt-auto text-right">
+                                    <a href="{{ joboffer }}" class="btn btn-outline-secondary btn-sm rounded-pill">
+                                        Edit
+                                    </a>
+                                    <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+

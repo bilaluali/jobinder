@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_block %}
+
+    <div class="col-sm-6">
+        <form method="post">
+            <div class="form-group" id="name">
+                <label class="font-weight-bold text-muted" for="name">Title</label>
+                <input name="name" type="text" class="form-control" id="name">
+            </div>
+            <div class="form-group" id="description">
+                <label class="font-weight-bold text-muted" for="description">Description</label>
+                <textarea name="description" class="form-control" id="description" rows="4"></textarea>
+            </div>
+            <div class="d-flex my-5">
+                <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Post"/>
+            </div>
+            {% csrf_token %}
+        </form>
+    </div>
+
+{% endblock %}

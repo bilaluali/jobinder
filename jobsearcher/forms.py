@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from jobsearcher.models import Company, Scope, Applicant
+from django.forms import ModelForm
+
+from jobsearcher.models import Company, Scope, Applicant, JobOffer
 
 
 class CompanyForm(UserCreationForm):
@@ -13,6 +15,7 @@ class CompanyForm(UserCreationForm):
             'email',
             'password1',
             'password2',
+            'scope',
             'telephone',
             'city',
             'zipCode',
@@ -32,9 +35,21 @@ class ApplicantForm(UserCreationForm):
             'email',
             'password1',
             'password2',
+            'scope',
+            #'themes'
             'telephone',
             'city',
             'zipCode',
             'description',
         )
 
+
+class JobOfferForm(ModelForm):
+    class Meta:
+        model = JobOffer
+        fields = (
+            'name',
+            'description',
+            # company,
+            # theme,
+        )

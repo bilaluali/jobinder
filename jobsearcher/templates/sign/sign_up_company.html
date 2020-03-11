@@ -50,8 +50,18 @@
                         <label class=" text-muted" for="extra_info">
                             Add extra information, we'll offer you more precise applicants.
                         </label>
-                        <input type="button"  id="extra_info" onclick="displayExtraInfo()"
+                        <input type="button"  id="extra_info" onclick="displayExtraInfoCompany()"
                                style="color: orange;" class="fa btn btn-light" value="&#xf0fe">
+                    </div>
+
+                    <div class="form-group" id="scope" style="display:none">
+                        <label class="font-weight-bold" for="company_scope">Scope</label>
+                        <select name="scope" class="form-control" id="company_scope">
+                            {% for scope_elem in form.scope %}
+                                <option>{{ scope_elem }}</option>
+                            {% endfor %}
+
+                        </select>
                     </div>
 
                     <div class="form-group" id="phone" style="display:none">
@@ -116,34 +126,6 @@
                 <a href="{% url 'sign_in' %}" class="text-muted">Sign In</a>
             </div>
         </div>
-
-
-        <script type="text/javascript">
-
-            function displayExtraInfo() {
-                var phone_field = document.getElementById("phone");
-                var city_field = document.getElementById("city");
-                var zip_field = document.getElementById("zip");
-                var url_field = document.getElementById("url");
-
-                if (phone_field.style.display == "block" &&
-                    city_field.style.display == "block" &&
-                    zip_field.style.display == "block" &&
-                    url_field.style.display == "block")
-                {
-                    phone_field.style.display = "none";
-                    city_field.style.display = "none";
-                    zip_field.style.display = "none";
-                    url_field.style.display = "none";
-                }
-                else {
-                    phone_field.style.display = "block";
-                    city_field.style.display = "block";
-                    zip_field.style.display = "block";
-                    url_field.style.display = "block";
-                }
-            }
-        </script>
     </div>
 
 {% endblock %}
