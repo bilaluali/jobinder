@@ -1,4 +1,4 @@
-/*Buttons*/
+/* Buttons */
 .underline {
     position: relative;
 }
@@ -41,14 +41,27 @@
   transition: all 0.3s ease-in-out;
 }
 
+.btn-primary-soft {
+  background-color: rgba(51, 94, 234, .1);
+  color: #335eea;
+}
 
-/*Font*/
+.btn-success-soft {
+  background-color: rgba(66, 186, 150, 0.16);
+  color: #33ba91;
+}
+
+/* Fonts */
 html *{
   font-family: 'Ubuntu', sans-serif;
 }
 
+.montserrat{
+  font-family: 'Montserrat', sans-serif;
+}
 
-/*Sidebar*/
+
+/* Sidebar */
 .bg-gradient-primary {
   background: linear-gradient(rgb(78, 115, 223) 10%, rgb(34, 74, 190) 100%)
 }
@@ -60,7 +73,7 @@ html *{
   overflow-y: auto;
 }
 
-/*Cards*/
+/* Cards */
 .border-left-success {
     border-left: .25rem solid
     #1cc88a !important;

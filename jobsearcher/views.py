@@ -11,11 +11,15 @@ from django.urls import reverse
 from django.utils import timezone
 
 from jobsearcher.forms import CompanyForm, ApplicantForm, JobOfferForm
-from jobsearcher.models import Company, JobOffer
+from jobsearcher.models import Company, JobOffer, Theme, Applicant, User
 
 
 def index(request):
     return render(request, 'index.html')
+
+
+def index_company(request):
+    return render(request, 'index_company.html')
 
 
 def is_signed(request):
@@ -39,7 +43,13 @@ def sign_in(request):
 
             if user is not None:
                 do_login(request, user)
-                return redirect(reverse('home'))
+                user_type = User.objects.get(username=request.user.username)
+
+                # First_name is not a common field.
+                if user_type.first_name:
+                    return redirect(reverse('home'))
+                else:
+                    return redirect(reverse('home_company'))
     else:
         form = AuthenticationForm()
 
@@ -57,7 +67,7 @@ def sign_up_company(request):
         form = CompanyForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('signup_done'))
+            return redirect(reverse('home_company'))
 
     else:
         form = CompanyForm()
@@ -74,14 +84,25 @@ def sign_up_applicant(request):
 
     if request.method == "POST":
         form = ApplicantForm(request.POST)
+
         if form.is_valid():
             form.save()
-            return redirect(reverse('signup_done'))
+            #for theme_pk in request.POST.getlist('themes'):
+            #    form.themes.add(get_object_or_404(Theme,Q(pk=theme_pk)))
+
+            return redirect(reverse('home'))
     else:
         form = ApplicantForm()
 
     args = {'form': form}
     return render(request, 'sign/sign_up_applicant.html', args)
+
+
+# Function to load themes based on scope election in applicant form.
+def load_themes(request):
+    scope_id = request.GET.get('scope')
+    themes = Theme.objects.filter(Q(scope__id=scope_id)).order_by('name')
+    return render(request, 'sign/themes_dropdownlist.html', {'themes': themes})
 
 
 def sign_out(request):
@@ -90,27 +111,34 @@ def sign_out(request):
 
 
 @login_required()
-def company_profile(request):
+def show_matches(request):
     company = get_object_or_404(Company, Q(id=request.user.id))
     context = {'company': company}
-    return render(request, 'profile/company_profile.html', context)
+    return render(request, 'profile/profile_matches.html', context)
 
 
 @login_required()
 def show_joboffers(request):
     joboffers_list = JobOffer.objects.filter(Q(last_modified__lte=timezone.now()) & Q(company__id=request.user.id)).order_by('-last_modified')
-    context = {'joboffers_list': joboffers_list}
+    company = get_object_or_404(Company, Q(id=request.user.id))
+    context = {'joboffers_list': joboffers_list, 'company': company}
     return render(request, 'profile/profile_joboffers.html', context)
 
 
 @login_required()
-def create_joboffer(request):
+def joboffer_create(request):
 
     if request.method == "POST":
         form = JobOfferForm(request.POST)
+        curr_user = get_object_or_404(Company, Q(id=request.user.id))
+
         if form.is_valid():
-            form.save()
-            return redirect(reverse('home'))
+            instance = form.save(commit=False)
+            instance.company = curr_user
+            instance.save()
+
+            return redirect(reverse('jobsearcher:company_profile_joboffers'))
+
     else:
         form = JobOfferForm()
 
@@ -124,17 +152,19 @@ def joboffer_detail(request, pk):
 
 
 @login_required()
-def edit_joboffer(request,pk):
+def joboffer_edit(request, pk):
     joboffer = get_object_or_404(JobOffer, Q(pk=pk) & Q(company__id=request.user.id))
 
     if request.method == 'POST':
         form = JobOfferForm(request.POST, instance=joboffer)
+        curr_user = get_object_or_404(Company, Q(id=request.user.id))
 
         if form.is_valid():
             instance = form.save(commit=False)
-            form.company = request.user.username
+            instance.company = curr_user
             instance.save()
-            return redirect(reverse('home'))
+            return redirect(reverse('jobsearcher:company_profile_joboffers'))
+
     else:
         form = JobOfferForm(instance=joboffer)
 

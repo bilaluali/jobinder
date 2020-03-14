@@ -4,10 +4,11 @@ function profile_request(url_name) {
     req.onreadystatechange = function () {
         // State == 4, server response ok.
         if (req.readyState === 4) {
-            document.getElementById('profile_options').innerHTML = req.responseText;
+
+            document.write(req.responseText);
+            history.pushState({}, null, url_name);
         }
     };
-
     // Send request
     req.send();
 }

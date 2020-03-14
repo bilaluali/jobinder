@@ -21,14 +21,22 @@ import jobsearcher
 
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
 
     path('', RedirectView.as_view(pattern_name='jobsearcher:index'), name='home'),
-    path('admin/', admin.site.urls),
-    path('jobsearcher/', include(('jobsearcher.urls', 'jobsearcher'),namespace='jobsearcher')),
+    path('jobsearcher/', include(('jobsearcher.urls', 'jobsearcher'), namespace='jobsearcher')),
+
+
+    path('company/', RedirectView.as_view(pattern_name='jobsearcher:index_company'), name='home_company'),
     path('company/signup/', jobsearcher.views.sign_up_company, name='sign_up_company'),
-    path('applicant/signup/', jobsearcher.views.sign_up_applicant, name='sign_up_applicant'),
+
+    path('signup/', jobsearcher.views.sign_up_applicant, name='sign_up_applicant'),
     path('signup_done/', TemplateView.as_view(template_name='sign/signup_done.html'), name='signup_done'),
     path('signin/', jobsearcher.views.sign_in, name='sign_in'),
-    path('signout/',jobsearcher.views.sign_out, name='sign_out'),
+    path('signout/', jobsearcher.views.sign_out, name='sign_out'),
+
+    # Path to get themes of scope via AJAX.
+    path('applicant/signup/load-themes', jobsearcher.views.load_themes, name='load_themes'),
 
 ]

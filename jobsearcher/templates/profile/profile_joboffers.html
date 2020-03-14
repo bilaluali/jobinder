@@ -1,28 +1,37 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "profile/profile_base.html" %}
 
-{% block body_block %}
-
+{% block profile_block %}
     <div class="col-sm-9">
-        <div class="mb-5">
-            <h4 class="font-weight-bold">JobOffers<sup>{{ joboffers_list | length }}</sup></h4>
+        <div class="row mb-5">
+            <div class="col-sm-6">
+                <h4 class="font-weight-bold text-primary">JobOffers<sup>{{ joboffers_list | length }}</sup></h4>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a href="{% url 'jobsearcher:joboffer_create' %}" class="btn btn-warning">
+                    Add
+                </a>
+            </div>
         </div>
         {% for offer in joboffers_list %}
-            <div class="card py-1 mb-3">
+            <div class="card py-1 mb-3 border-0 shadow-sm">
 
                 <div class="row no-gutters align-items-center">
-                    <div class="col-sm-2 border-right text-center">
+                    <div class="col-sm-4 col-md-2 border-right text-center">
                         <span style="font-size: 36px; color: orange;">
                           <i class="card-image fab fa-aws"></i>
                         </span>
                     </div>
 
-                    <div class="col-sm-10">
+                    <div class="col-sm-8 col-md-10">
 
                         <div class="card-body">
                             <div class="row no-gutters">
                                 <h6 class="card-title">{{ offer.name }}</h6>
-                                <small class="ml-3">{{ offer.theme }}</small>
+                                <small class="ml-3">
+                                    <span style="background-color:#fad1e6; color:#e8308c" class="badge">
+                                        {{ offer.theme }}
+                                    </span>
+                                </small>
                             </div>
 
                             <div class="row">
@@ -33,7 +42,7 @@
                                 </div>
 
                                 <div class="col-sm-6 mt-auto text-right">
-                                    <a href="{{ company.get_absolute_url }}" class="btn btn-outline-secondary btn-sm rounded-pill">
+                                    <a href="{{ offer.get_absolute_url_edit }}" class="btn btn-outline-secondary btn-sm rounded-pill">
                                         Edit
                                     </a>
                                     <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill">

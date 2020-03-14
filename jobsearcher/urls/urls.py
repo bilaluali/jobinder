@@ -8,12 +8,19 @@ app_name = "mypoints"
 
 urlpatterns = [
 
-    # Index Page: /jobsearcher
+    # Index Page
     path('', views.index, name='index'),
+    path('company/', views.index_company, name='index_company'),
 
-
-    path('company/profile/', views.company_profile, name='company_profile'),
+    # Profile Options
+    path('company/profile/matches', views.show_matches, name='company_profile_matches'),
     path('company/profile/joboffers', views.show_joboffers, name='company_profile_joboffers'),
-    path('company/profile/joboffers/<int:pk>/edit', views.joboffer_detail, name='joboffer_detail'),
-    path('company/profile/joboffers/<int:pk>/edit', views.edit_joboffer, name='joboffer_edit'),
+    #path('company/profile/information', views.show_joboffers, name='company_profile_information'),
+
+
+    # JobOffer
+    path('company/profile/joboffers/create', views.joboffer_create, name='joboffer_create'),
+    path('company/profile/joboffers/<int:pk>', views.joboffer_detail, name='joboffer_detail'),
+    path('company/profile/joboffers/<int:pk>/edit', views.joboffer_edit, name='joboffer_edit'),
+    path('company/profile/joboffers/<int:pk>/delete', views.joboffer_delete, name='joboffer_delete'),
 ]

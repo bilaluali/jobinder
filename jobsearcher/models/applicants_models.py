@@ -10,8 +10,8 @@ class Applicant(User):
     city = models.CharField(blank=True, null=True, max_length=50)
     zipCode = models.CharField(blank=True, null=True, max_length=16)
     description = models.TextField(blank=True, null=True)
-    scope = models.ForeignKey(Scope, null=True, related_name="applicants",on_delete=models.SET_NULL)
-    themes = models.ManyToManyField(Theme,related_name="applicants")
+    scope = models.ForeignKey(Scope, null=True, blank=True, related_name="applicants", on_delete=models.SET_NULL)
+    themes = models.ManyToManyField(Theme, blank=True, related_name="applicants")
 
     modified_by = models.ForeignKey(User, null=True, related_name="applicants", on_delete=models.SET_NULL)
     last_modified = models.DateField(auto_now=True)

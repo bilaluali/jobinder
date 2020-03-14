@@ -5,8 +5,9 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white p-4">
         <div class="container">
-            <a style="font-size: x-large" class="navbar-brand text-primary montserrat" href="{% url 'home' %}">Jobinder</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#inavbar" aria-controls="inavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <a style="font-size: x-large" class="navbar-brand text-info montserrat" href="{% url 'home_company' %}">Jobinder</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#inavbar"
+                    aria-controls="inavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -14,7 +15,8 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item active">
-                            <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'jobsearcher:company_profile_matches' %}">Profile</a>
+                            <a class="nav-link underline-mg btn-sm text-muted"
+                               href="{% url 'jobsearcher:company_profile_matches' %}">Profile</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'sign_out' %}">Sign Out</a>
@@ -24,13 +26,14 @@
                             <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'sign_in' %}">Sign In</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'sign_up_applicant' %}">Sign Up</a>
+                            <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'sign_up_company' %}">Sign Up</a>
                         </li>
-                         <li class="nav-item active mr-3">
+                        <li class="nav-item active mr-3">
                             <a class="nav-link underline-mg btn-sm text-muted" href="#">Contact us</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-white font-weight-bold btn btn-info btn-sm" href="{% url 'home_company' %}">Employers</a>
+                            <a class="nav-link text-white font-weight-bold btn btn-primary btn-sm"
+                               href="{% url 'home' %}">Seekers</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -62,23 +65,23 @@
                 <div class="row align-items-center py-5 mb-5">
                     <div class="col-sm-12 col-md-6 p-3">
                         <h2>
-                            Get a job that <span style="color: magenta">fits you</span> in few <br> swipes.
+                            Find job seekers <span style="color: magenta">fit your</span> business scope in few swipes.
                         </h2>
                         <p style="line-height: 1.6" class="text-muted mb-6 mt-3">
-                            Navigate only through job offers according your scope easily.
-                            <br>Match with companies and get and interview.
+                            Navigate only through job seekers according your scope easily.
+                            <br>Match and contact them.
                         </p>
                         <div class="mt-5" id="login_link">
-                            <a class="btn btn-primary-soft lift" href="{% url 'sign_up_applicant' %}">Get Started</a>
+                            <a class="btn btn-success-soft lift" href="{% url 'sign_up_company' %}">Get Started</a>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <img src="{% static "images/navigate.svg" %}" class="img-fluid">
+                        <img src="{% static "images/swipe.svg" %}" class="img-fluid">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-4 p-5">
-                        <div class="mb-3 text-primary">
+                        <div class="mb-3 text-info">
                             <span style="font-size: 30px;">
                                 <i class="fas fa-link"></i>
                             </span>
@@ -92,28 +95,28 @@
                     </div>
 
                     <div class="col-sm-12 col-md-4 p-5">
-                        <div class="mb-3 text-primary">
+                        <div class="mb-3 text-info">
                             <span style="font-size: 30px;">
                                 <i class="fas fa-search"></i>
                             </span>
                         </div>
-                        <h5>Browse jobs</h5>
+                        <h5>Browse jobs seekers</h5>
                         <p class="text-muted text-justify mb-5">
-                            Search in jobinder is embarrassingly easy. Swipe job offers liking or noping them.
-                            Employers will like you, get a match and see each other contact details.
+                            Search in jobinder is embarrassingly easy. Swipe job seekers liking or noping them.
+                            Job seekers will like your company, get a match and see each other contact details.
                         </p>
                     </div>
 
                     <div class="col-sm-12 col-md-4 p-5">
-                        <div class="mb-3 text-primary">
+                        <div class="mb-3 text-info">
                             <span style="font-size: 30px;">
                                 <i class="fas fa-filter"></i>
                             </span>
                         </div>
                         <h5>Intelligent filters</h5>
                         <p class="text-muted text-justify mb-5">
-                            Visualize only offers fit with your business scope. Our algorithm will filter automatically by
-                            your scopes and specialities, showing you best offers fit you. No worries and fun.
+                            Visualize only seekers fit with your business scope. Our algorithm will filter automatically
+                            by your scopes and specialities, showing you the best seekers fit you. No worries and fun.
                         </p>
                     </div>
                 </div>
@@ -126,7 +129,8 @@
                     <div class="col-sm-12 col-md-6">
                         <h6 class="font-weight-bold text-info">EMPLOYERS</h6>
                         <h4 id="text-writer"></h4>
-                        <p class="text-muted">Start now! Swipe through thousands of seekers from your business scope.</p>
+                        <p class="text-muted">Start now! Swipe through thousands of seekers from your business
+                            scope.</p>
                         <a class="btn btn-primary" href="#">Post</a>
                     </div>
                     <div class="col-sm-12 col-md-6 text-right">

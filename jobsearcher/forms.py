@@ -1,8 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.db.models import Q
 from django.forms import ModelForm
 
-from jobsearcher.models import Company, Scope, Applicant, JobOffer
+from jobsearcher.models import Company, Scope, Applicant, JobOffer, Theme
 
 
 class CompanyForm(UserCreationForm):
@@ -36,7 +37,7 @@ class ApplicantForm(UserCreationForm):
             'password1',
             'password2',
             'scope',
-            #'themes'
+            'themes',
             'telephone',
             'city',
             'zipCode',
@@ -50,6 +51,6 @@ class JobOfferForm(ModelForm):
         fields = (
             'name',
             'description',
-            # company,
-            # theme,
+            'company',
+            'theme',
         )

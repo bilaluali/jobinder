@@ -3,45 +3,46 @@
 
 {% block body_block %}
 
-    <div class="container-fluid">
+    <div id="content" class="container-fluid">
 
         <div class="row">
             <!--Visible only on md and greater (d-none d-md-block) // padding-top: .5rem; overflow-x: hidden;-->
 
-            <nav class="fixed-top col-md-3 col-lg-2 d-none d-md-block bg-gradient-primary rounded" style="top:0; bottom:0;">
+            <nav class="fixed-top col-md-3 col-lg-2 d-none d-md-block bg-white shadow-sm rounded" style="top:0; bottom:0;">
 
-                <div class="text-center text-white  own-font font-weight-bold p-3 mb-3">
+                <div class="text-center font-weight-bold p-3 mb-3">
                     <a style="font-size: x-large" >{{ company.username }}</a>
                 </div>
 
                 <div class="sidebar">
                     <ul class="nav flex-column">
-                        <li class="nav-item own-font">
-                            <a id="matches" class="nav-link text-light active underline p-3" href="#">
+                        <li class="nav-item">
+                            <a id="matches" class="nav-link active underline-mg text-dark p-3" href="#">
                                 <i class="fas fa-user-friends"></i>
                                 Matches
                             </a>
                         </li>
-                        <li class="nav-item own-font">
-                            <a id="joboffers" onclick="profile_request('{% url 'jobsearcher:company_profile_joboffers' %}')" href="#" class="nav-link text-light active underline p-3">
+                        <li class="nav-item">
+                            <a id="joboffers" onclick="profile_request('{% url 'jobsearcher:company_profile_joboffers' %}')"
+                               href="#" class="nav-link active underline-mg text-dark p-3">
                                 <i class="fas fa-briefcase"></i>
                                 JobOffers
                             </a>
                         </li>
-                        <li class="nav-item own-font">
-                            <a id="info" class="nav-link text-light active underline p-3" href="#">
+                        <li class="nav-item">
+                            <a id="info" class="nav-link active underline-mg text-dark p-3" href="#">
                                 <i class="far fa-address-card"></i>
                                 Information
                             </a>
                         </li>
-                        <li class="nav-item own-font">
-                            <a id="insights" class="nav-link text-light active underline p-3" href="#">
+                        <li class="nav-item">
+                            <a id="insights" class="nav-link active underline-mg text-dark p-3" href="#">
                                 <i class="fas fa-chart-bar"></i>
                                 Insights
                             </a>
                         </li>
-                        <li class="nav-item own-font">
-                            <a id="preferences" class="nav-link text-light active underline p-3" href="#">
+                        <li class="nav-item">
+                            <a id="preferences" class="nav-link active underline-mg text-dark p-3" href="#">
                                 <i class="fas fa-cog"></i>
                                 Preferences
                             </a>
@@ -51,8 +52,8 @@
 
             </nav>
 
-            <div class="col-md-9 col-lg-10 ml-auto p-0">
-                <nav class="navbar navbar-expand-lg navbar-light shadow m-0">
+            <div class="col-md-9 col-lg-10 ml-auto p-0" style="background-color: rgba(239,240,243,0.54)">
+                <nav class="navbar navbar-expand-lg navbar-light m-0">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="pnavbar"
                             aria-controls="pnavbar" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -83,7 +84,9 @@
                 </nav>
                 <div class="container my-5">
                     <div id="profile_options" class="row justify-content-center">
-                        <!--Ajax response content-->
+                        {% block profile_block %}
+                            <!-- Profile options -->
+                        {% endblock %}
                     </div>
                 </div>
 

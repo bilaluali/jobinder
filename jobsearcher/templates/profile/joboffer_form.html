@@ -7,11 +7,27 @@
         <form method="post">
             <div class="form-group" id="name">
                 <label class="font-weight-bold text-muted" for="name">Title</label>
-                <input name="name" type="text" class="form-control" id="name">
+                {% if form.name.value %}
+                    <input name="name" type="text" class="form-control" id="name" value="{{ form.name.value }}">
+                {% else %}
+                    <input name="name" type="text" class="form-control" id="name">
+                {% endif %}
             </div>
             <div class="form-group" id="description">
                 <label class="font-weight-bold text-muted" for="description">Description</label>
-                <textarea name="description" class="form-control" id="description" rows="4"></textarea>
+                {% if form.description.value %}
+                    <textarea name="description" class="form-control" id="description" rows="5">{{ form.description.value }}</textarea>
+                {% else %}
+                    <textarea name="description" class="form-control" id="description" rows="5"></textarea>
+                {% endif %}
+            </div>
+            <div class="form-group" id="theme">
+                <label class="font-weight-bold" for="joboffer_theme">Theme</label>
+                <select name="theme" class="form-control" id="joboffer_theme">
+                    {% for theme in form.theme %}
+                        <option>{{ theme }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="d-flex my-5">
                 <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Post"/>
