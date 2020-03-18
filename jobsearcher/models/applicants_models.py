@@ -12,6 +12,7 @@ class Applicant(User):
     description = models.TextField(blank=True, null=True)
     scope = models.ForeignKey(Scope, null=True, blank=True, related_name="applicants", on_delete=models.SET_NULL)
     themes = models.ManyToManyField(Theme, blank=True, related_name="applicants")
+    photo = models.ImageField(upload_to="applicant_logos/", blank=True, null=True)
 
     modified_by = models.ForeignKey(User, null=True, related_name="applicants", on_delete=models.SET_NULL)
     last_modified = models.DateField(auto_now=True)

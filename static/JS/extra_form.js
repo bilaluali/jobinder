@@ -4,18 +4,21 @@ function displayExtraInfoCompany() {
     var zip_field = document.getElementById("zip");
     var url_field = document.getElementById("url");
     var scope_field = document.getElementById("scope");
+    var logo_field = document.getElementById("logo");
 
     if (phone_field.style.display == "block" &&
         city_field.style.display == "block" &&
         zip_field.style.display == "block" &&
         url_field.style.display == "block" &&
-        scope_field.style.display == "block")
+        scope_field.style.display == "block" &&
+        logo_field.style.display == "block")
     {
         phone_field.style.display = "none";
         city_field.style.display = "none";
         zip_field.style.display = "none";
         url_field.style.display = "none";
         scope_field.style.display = "none";
+        logo_field.style.display = "none";
     }
     else {
         phone_field.style.display = "block";
@@ -23,6 +26,7 @@ function displayExtraInfoCompany() {
         zip_field.style.display = "block";
         url_field.style.display = "block";
         scope_field.style.display = "block";
+        logo_field.style.display = "block";
     }
 }
 

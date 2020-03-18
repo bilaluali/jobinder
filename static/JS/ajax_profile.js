@@ -1,12 +1,14 @@
-function profile_request(url_name) {
+function ajax_request(url_name, div_id)
+{
     var req = new XMLHttpRequest(); // Create the request.
     req.open('GET', url_name);
+    req.setRequestHeader("X-Requested-With" ,"XMLHttpRequest");
     req.onreadystatechange = function () {
         // State == 4, server response ok.
         if (req.readyState === 4) {
-
-            document.write(req.responseText);
-            history.pushState({}, null, url_name);
+            document.getElementById(div_id).innerHTML = req.responseText;
+            //history.pushState({}, 'null', url_name);
+            history.replaceState(history.state, '', url_name);
         }
     };
     // Send request

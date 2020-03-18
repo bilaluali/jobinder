@@ -1,6 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
-from django.db.models import Q
 from django.forms import ModelForm
 
 from jobsearcher.models import Company, Scope, Applicant, JobOffer, Theme
@@ -21,6 +20,7 @@ class CompanyForm(UserCreationForm):
             'city',
             'zipCode',
             'url',
+            'logo',
         )
 
 
@@ -42,6 +42,7 @@ class ApplicantForm(UserCreationForm):
             'city',
             'zipCode',
             'description',
+            'photo',
         )
 
 

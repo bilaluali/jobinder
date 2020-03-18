@@ -64,7 +64,7 @@ def sign_up_company(request):
         return is_already_signed
 
     if request.method == 'POST':
-        form = CompanyForm(request.POST)
+        form = CompanyForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect(reverse('home_company'))
@@ -83,13 +83,10 @@ def sign_up_applicant(request):
         return is_already_signed
 
     if request.method == "POST":
-        form = ApplicantForm(request.POST)
+        form = ApplicantForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
-            #for theme_pk in request.POST.getlist('themes'):
-            #    form.themes.add(get_object_or_404(Theme,Q(pk=theme_pk)))
-
             return redirect(reverse('home'))
     else:
         form = ApplicantForm()
@@ -110,6 +107,10 @@ def sign_out(request):
     return redirect('/')
 
 
+def isajax_req(request):
+    return request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+
 @login_required()
 def show_matches(request):
     company = get_object_or_404(Company, Q(id=request.user.id))
@@ -121,7 +122,14 @@ def show_matches(request):
 def show_joboffers(request):
     joboffers_list = JobOffer.objects.filter(Q(last_modified__lte=timezone.now()) & Q(company__id=request.user.id)).order_by('-last_modified')
     company = get_object_or_404(Company, Q(id=request.user.id))
-    context = {'joboffers_list': joboffers_list, 'company': company}
+    context = {'joboffers_list': joboffers_list, 'company':company}
+
+    if isajax_req(request):
+        context['isajax'] = True
+    else:
+        # Will render full page.
+        context['isajax'] = False
+
     return render(request, 'profile/profile_joboffers.html', context)
 
 
@@ -147,11 +155,6 @@ def joboffer_create(request):
 
 
 @login_required()
-def joboffer_detail(request, pk):
-    pass
-
-
-@login_required()
 def joboffer_edit(request, pk):
     joboffer = get_object_or_404(JobOffer, Q(pk=pk) & Q(company__id=request.user.id))
 
@@ -169,10 +172,38 @@ def joboffer_edit(request, pk):
         form = JobOfferForm(instance=joboffer)
 
     args = {'form': form}
+    args['isajax'] = True if isajax_req(request) else False
     return render(request, 'profile/joboffer_form.html', args)
 
 
 @login_required()
 def joboffer_delete(request, pk):
-    pass
+    joboffer = get_object_or_404(JobOffer, Q(pk=pk) & Q(company__id=request.user.id))
+    joboffer.delete()
+    return redirect(reverse('jobsearcher:company_profile_joboffers'))
+
+
+@login_required()
+def company_info_edit(request, pk):
+    company = get_object_or_404(Company, Q(pk=pk) & Q(id=request.user.id))
+
+    if request.method == 'POST':
+        form = CompanyForm(request.POST, request.FILES, instance=company)
+        if form.is_valid():
+            form.save()
+
+            # Re-Login because of password update.
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                do_login(request, user)
+            return redirect(company.get_absolute_url_edit())
+    else:
+        form = CompanyForm(instance=company)
+
+    args = {'form': form, 'company': company}
+    args['isajax'] = True if isajax_req(request) else False
+    return render(request, 'profile/company_form.html', args)
 

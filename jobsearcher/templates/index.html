@@ -14,20 +14,20 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item active">
-                            <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'jobsearcher:company_profile_matches' %}">Profile</a>
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'jobsearcher:company_profile_matches' %}">Profile</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'sign_out' %}">Sign Out</a>
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'sign_out' %}">Sign Out</a>
                         </li>
                     {% else %}
                         <li class="nav-item active">
-                            <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'sign_in' %}">Sign In</a>
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'sign_in' %}">Sign In</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link underline-mg btn-sm text-muted" href="{% url 'sign_up_applicant' %}">Sign Up</a>
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'sign_up_applicant' %}">Sign Up</a>
                         </li>
                          <li class="nav-item active mr-3">
-                            <a class="nav-link underline-mg btn-sm text-muted" href="#">Contact us</a>
+                            <a class="nav-link underline-warn btn-sm text-muted" href="#">Contact us</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link text-white font-weight-bold btn btn-info btn-sm" href="{% url 'home_company' %}">Employers</a>

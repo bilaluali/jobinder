@@ -1,0 +1,162 @@
+{% extends isajax|yesno:"profile/ajax_base.html,profile/profile_base.html" %}
+{% block profile_block %}
+
+
+
+    <div class="col-sm-6">
+
+        <div class="row mb-4 pb-2">
+            <div class="col-sm-6">
+                <span style="font-size: 24px; color: #eeaa66" class="mr-2">
+                    <i class="far fa-address-card"></i>
+                </span>
+                <h5 class="font-weight-bold text-secondary d-inline">Information</h5>
+            </div>
+            <div class="col-sm-6 text-right">
+                <input form="infoUpdate" type="submit" class="btn btn-primary btn-sm" value="Update"/>
+            </div>
+            <div class="col-sm-12">
+                <small class="text-muted">Last modified: {{ company.last_modified }}</small>
+            </div>
+        </div>
+
+        <form id="infoUpdate" method="post" enctype="multipart/form-data">
+
+            <div class="form-group" id="company">
+                <label class="font-weight-bold" for="company_name">Company</label>
+                <input name="username" type="text" class="form-control" id="company_name"
+                       value="{{ form.username.value }}">
+                <small id="user_help" class="form-text text-muted">You will use this to Sign In.</small>
+
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        <small class="text-danger">{{ error|escape }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label class="font-weight-bold" for="email_addr">Email address</label>
+                <input name="email" type="email" class="form-control" id="email_addr"
+                       value="{{ form.email.value }}">
+                <small id="email_help" class="form-text text-muted">jobinder@account.com.</small>
+
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <small class="text-danger">{{ error|escape }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+            <div class="form-row" id="passwds">
+                <div class="form-group col-sm-6" id="password1">
+                    <label class="font-weight-bold" for="passwd1">Create Password</label>
+                    <input name="password1" type="password" class="form-control" id="passwd1"
+                           value="{{ form.password1.value }}">
+                    <small id="passwd_help" class="form-text text-muted">Your password must contain at least 8
+                        characters.</small>
+
+                    {% if form.password1.errors %}
+                        {% for error in form.password1.errors %}
+                            <small class="text-danger">{{ error|escape }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-group col-sm-6" id="password2">
+                    <label class="font-weight-bold" for="passwd2">Confirm Password</label>
+                    <input name="password2" type="password" class="form-control" id="passwd2"
+                           value="{{ form.password2.value }}">
+
+                    {% if form.password2.errors %}
+                        {% for error in form.password2.errors %}
+                            <small class="text-danger">{{ error|escape }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group" id="scope">
+                <label class="font-weight-bold" for="company_scope">Scope</label>
+                <select name="scope" class="form-control" id="company_scope">
+                    {% for scope_elem in form.scope %}
+                        <option>{{ scope_elem }}</option>
+                    {% endfor %}
+                </select>
+
+                {% if form.scope.errors %}
+                    {% for error in form.scope.errors %}
+                        <small class="text-danger">{{ error|escape }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group" id="phone">
+                <label class="font-weight-bold" for="phone">Telephone</label>
+                <input name="telephone" type="tel" class="form-control" id="phone" value="{{ form.telephone.value }}">
+
+                {% if form.telephone.errors %}
+                    {% for error in form.telephone.errors %}
+                        <small class="text-danger">{{ error|escape }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-row" id="address">
+                <div class="form-group col-sm-6" id="city">
+                    <label class="font-weight-bold" for="city">City</label>
+                    <input name="city" type="text" class="form-control" id="city" value="{{ form.city.value }}">
+                    <small id="city_help" class="form-text text-muted">
+                        We'll offer you applicants closer your company.
+                    </small>
+
+                    {% if form.city.errors %}
+                        {% for error in form.city.errors %}
+                            <small class="text-danger">{{ error|escape }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-6" id="zip">
+                    <label class="font-weight-bold" for="zip">Zip Code</label>
+                    <input name="zipCode" type="number" class="form-control" id="zip" value="{{ form.zipCode.value }}">
+
+                    {% if form.zip.errors %}
+                        {% for error in form.zip.errors %}
+                            <small class="text-danger">{{ error|escape }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group" id="url">
+                <label class="font-weight-bold" for="company_url">Url website</label>
+                <input name="url" type="url" class="form-control" id="company_url" value="{{ form.url.value }}">
+                <small id="url_help" class="form-text text-muted">
+                    https://www.jobinder.com
+                </small>
+
+                {% if form.url.errors %}
+                    {% for error in form.url.errors %}
+                        <small class="text-danger">{{ error|escape }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group" id="logo">
+                <label class="font-weight-bold" for="logo" >Logo</label>
+                <input name="logo" type="file" class="form-control-file" id="logo" value="{{ form.logo.value }}">
+                <small class="text-primary"> current: {{ form.logo.value }}</small>
+
+                {% if form.logo.errors %}
+                    {% for error in form.logo.errors %}
+                        <small class="text-danger">{{ error|escape }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            {% csrf_token %}
+        </form>
+
+    </div>
+
+{% endblock %}
