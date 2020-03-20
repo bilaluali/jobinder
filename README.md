@@ -45,7 +45,7 @@ Without this, the application cannot be used.
     - [ ] (O) Ask for user first, then password
     - [x] After register require profile description
 - [ ] Profile section
-    - [ ] Allow edit profile 
+    - [X] Allow edit profile 
     - [ ] Show current matches
     - [x] Company: register and modify own Job Offers
 - [ ] Search section
@@ -55,7 +55,7 @@ Without this, the application cannot be used.
     - [ ] Show contact data
     - [ ] (O) Send notification to email 
     - [ ] (O) Communication / Chat
-- [ ] Predefine scopes and respective themes.
+- [X] Predefine scopes and respective themes.
 
 
 

@@ -25,7 +25,7 @@ class Applicant(User):
         return reverse('jobsearcher:applicant_detail', kwargs={'pk': self.pk})
 
     def get_absolute_url_edit(self):
-        return reverse('jobsearcher:applicant_edit', kwargs={'pk': self.pk})
+        return reverse('jobsearcher:applicant_profile_info_edit', kwargs={'pk': self.pk})
 
     def get_absolute_url_delete(self):
         return reverse('jobsearcher:applicant_delete', kwargs={'pk': self.pk})

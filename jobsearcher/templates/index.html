@@ -14,7 +14,7 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item active">
-                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'jobsearcher:company_profile_matches' %}">Profile</a>
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'jobsearcher:applicant_profile_matches' %}">Profile</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'sign_out' %}">Sign Out</a>
@@ -30,7 +30,7 @@
                             <a class="nav-link underline-warn btn-sm text-muted" href="#">Contact us</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-white font-weight-bold btn btn-info btn-sm" href="{% url 'home_company' %}">Employers</a>
+                            <a class="nav-link text-white font-weight-bold btn btn-secondary btn-sm" href="{% url 'home_company' %}">Employers</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -41,18 +41,19 @@
     {% if user.is_authenticated %}
 
 
-        <section class="py-5">
+        <section class="bg-gradient py-5">
             <div class="container">
                 <div class="row py-5 mb-5">
-                    <div class="col-sm-12 text-center">
+                    <div class="col-sm-12 text-center py-5">
+                        <h1 class="text-white mb-3">Let's like some offers.</h1>
+                        <h5 class="text-white mb-5">Finding a job has never been so easy<br>Press and explore.</h5>
                         <div id="navigate_link">
-                            <a class="btn btn-primary-soft lift" href="#">Explore</a>
+                            <a class="btn btn-warning text-white" href="#">Explore</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
     {% else %}
 
@@ -62,18 +63,18 @@
                 <div class="row align-items-center py-5 mb-5">
                     <div class="col-sm-12 col-md-6 p-3">
                         <h2>
-                            Get a job that <span style="color: magenta">fits you</span> in few <br> swipes.
+                            Get a job that <span class="warn">fits you</span> in few <br> swipes.
                         </h2>
                         <p style="line-height: 1.6" class="text-muted mb-6 mt-3">
                             Navigate only through job offers according your scope easily.
                             <br>Match with companies and get and interview.
                         </p>
                         <div class="mt-5" id="login_link">
-                            <a class="btn btn-primary-soft lift" href="{% url 'sign_up_applicant' %}">Get Started</a>
+                            <a class="btn btn-warning text-white" href="{% url 'sign_up_applicant' %}">Get Started</a>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <img src="{% static "images/navigate.svg" %}" class="img-fluid">
+                        <img src="{% static "images/interview.svg" %}" class="img-fluid">
                     </div>
                 </div>
                 <div class="row">
@@ -124,7 +125,7 @@
             <div class="container py-5">
                 <div class="row align-items-center">
                     <div class="col-sm-12 col-md-6">
-                        <h6 class="font-weight-bold text-info">EMPLOYERS</h6>
+                        <h6 class="font-weight-bold text-secondary">EMPLOYERS</h6>
                         <h4 id="text-writer"></h4>
                         <p class="text-muted">Start now! Swipe through thousands of seekers from your business scope.</p>
                         <a class="btn btn-primary" href="#">Post</a>

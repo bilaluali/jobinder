@@ -5,7 +5,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white p-4">
         <div class="container">
-            <a style="font-size: x-large" class="navbar-brand text-info montserrat" href="{% url 'home_company' %}">Jobinder</a>
+            <a style="font-size: x-large" class="navbar-brand text-secondary montserrat" href="{% url 'home_company' %}">Jobinder</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#inavbar"
                     aria-controls="inavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,12 +44,14 @@
     {% if user.is_authenticated %}
 
 
-        <section class="py-5">
+        <section class="bg-gradient py-5">
             <div class="container">
                 <div class="row py-5 mb-5">
-                    <div class="col-sm-12 text-center">
+                    <div class="col-sm-12 text-center py-5">
+                        <h1 class="text-white mb-3">Let's like some seekers.</h1>
+                        <h5 class="text-white mb-5">Finding seekers has never been so easy<br>Press and explore.</h5>
                         <div id="navigate_link">
-                            <a class="btn btn-primary-soft lift" href="#">Explore</a>
+                            <a class="btn btn-warning text-white" href="#">Explore</a>
                         </div>
                     </div>
                 </div>
@@ -65,14 +67,14 @@
                 <div class="row align-items-center py-5 mb-5">
                     <div class="col-sm-12 col-md-6 p-3">
                         <h2>
-                            Find job seekers <span style="color: magenta">fit your</span> business scope in few swipes.
+                            Find job seekers <span class="warn">fit your</span> business scope in few swipes.
                         </h2>
                         <p style="line-height: 1.6" class="text-muted mb-6 mt-3">
                             Navigate only through job seekers according your scope easily.
                             <br>Match and contact them.
                         </p>
                         <div class="mt-5" id="login_link">
-                            <a class="btn btn-success-soft lift" href="{% url 'sign_up_company' %}">Get Started</a>
+                            <a class="btn btn-secondary" href="{% url 'sign_up_company' %}">Get Started</a>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
@@ -81,7 +83,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-md-4 p-5">
-                        <div class="mb-3 text-info">
+                        <div class="mb-3 text-secondary">
                             <span style="font-size: 30px;">
                                 <i class="fas fa-link"></i>
                             </span>
@@ -95,7 +97,7 @@
                     </div>
 
                     <div class="col-sm-12 col-md-4 p-5">
-                        <div class="mb-3 text-info">
+                        <div class="mb-3 text-secondary">
                             <span style="font-size: 30px;">
                                 <i class="fas fa-search"></i>
                             </span>
@@ -108,7 +110,7 @@
                     </div>
 
                     <div class="col-sm-12 col-md-4 p-5">
-                        <div class="mb-3 text-info">
+                        <div class="mb-3 text-secondary">
                             <span style="font-size: 30px;">
                                 <i class="fas fa-filter"></i>
                             </span>
@@ -127,7 +129,7 @@
             <div class="container py-5">
                 <div class="row align-items-center">
                     <div class="col-sm-12 col-md-6">
-                        <h6 class="font-weight-bold text-info">EMPLOYERS</h6>
+                        <h6 class="font-weight-bold text-secondary">EMPLOYERS</h6>
                         <h4 id="text-writer"></h4>
                         <p class="text-muted">Start now! Swipe through thousands of seekers from your business
                             scope.</p>

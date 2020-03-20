@@ -1,7 +1,5 @@
-{% extends isajax|yesno:"profile/ajax_base.html,profile/profile_base.html" %}
+{% extends isajax|yesno:"profile_company/ajax_base.html,profile_applicant/profile_base.html" %}
 {% block profile_block %}
-
-
 
     <div class="col-sm-6">
 
@@ -13,19 +11,18 @@
                 <h5 class="font-weight-bold text-secondary d-inline">Information</h5>
             </div>
             <div class="col-sm-6 text-right">
-                <input form="infoUpdate" type="submit" class="btn btn-primary btn-sm" value="Update"/>
+                <input form="applicantForm" type="submit" class="btn btn-primary btn-sm" value="Update"/>
             </div>
             <div class="col-sm-12">
-                <small class="text-muted">Last modified: {{ company.last_modified }}</small>
+                <small class="text-muted">Last modified: {{ applicant.last_modified }}</small>
             </div>
         </div>
 
-        <form id="infoUpdate" method="post" enctype="multipart/form-data">
+        <form method="post" id="applicantForm" data-themes-url="{% url 'load_themes' %}" enctype="multipart/form-data">
 
-            <div class="form-group" id="company">
-                <label class="font-weight-bold" for="company_name">Company</label>
-                <input name="username" type="text" class="form-control" id="company_name"
-                       value="{{ form.username.value }}">
+            <div class="form-group" id="username">
+                <label class="font-weight-bold" for="username">Username</label>
+                <input name="username" type="text" class="form-control" id="username" value="{{ form.username.value }}">
                 <small id="user_help" class="form-text text-muted">You will use this to Sign In.</small>
 
                 {% if form.username.errors %}
@@ -33,12 +30,37 @@
                         <small class="text-danger">{{ error|escape }}</small>
                     {% endfor %}
                 {% endif %}
+
+            </div>
+
+            <div class="form-row" id="name">
+                <div class="form-group col-sm-6" id="fname">
+                    <label class="font-weight-bold" for="fname">First name</label>
+                    <input name="first_name" type="text" class="form-control" id="fname" value="{{ form.first_name.value }}">
+
+                    {% if form.first_name.errors %}
+                        {% for error in form.first_name.errors %}
+                            <small class="text-danger">{{ error|escape }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="form-group col-sm-6" id="lname">
+
+                    <label class="font-weight-bold" for="lname">Last name</label>
+                    <input name="last_name" type="text" class="form-control" id="lname" value="{{ form.last_name.value }}">
+
+                    {% if form.last_name.errors %}
+                        {% for error in form.last_name.errors %}
+                            <small class="text-danger">{{ error|escape }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
 
             <div class="form-group">
+
                 <label class="font-weight-bold" for="email_addr">Email address</label>
-                <input name="email" type="email" class="form-control" id="email_addr"
-                       value="{{ form.email.value }}">
+                <input name="email" type="email" class="form-control" id="email_addr" value="{{ form.email.value }}">
                 <small id="email_help" class="form-text text-muted">jobinder@account.com.</small>
 
                 {% if form.email.errors %}
@@ -48,14 +70,11 @@
                 {% endif %}
             </div>
 
-
             <div class="form-row" id="passwds">
                 <div class="form-group col-sm-6" id="password1">
                     <label class="font-weight-bold" for="passwd1">Create Password</label>
-                    <input name="password1" type="password" class="form-control" id="passwd1"
-                           value="{{ form.password1.value }}">
-                    <small id="passwd_help" class="form-text text-muted">Your password must contain at least 8
-                        characters.</small>
+                    <input name="password1" type="password" class="form-control" id="passwd1" value="{{ form.password1.value }}">
+                    <small id="passwd_help" class="form-text text-muted">Your password must contain at least 8 characters.</small>
 
                     {% if form.password1.errors %}
                         {% for error in form.password1.errors %}
@@ -66,8 +85,7 @@
 
                 <div class="form-group col-sm-6" id="password2">
                     <label class="font-weight-bold" for="passwd2">Confirm Password</label>
-                    <input name="password2" type="password" class="form-control" id="passwd2"
-                           value="{{ form.password2.value }}">
+                    <input name="password2" type="password" class="form-control" id="passwd2" value="{{ form.password2.value }}">
 
                     {% if form.password2.errors %}
                         {% for error in form.password2.errors %}
@@ -78,8 +96,8 @@
             </div>
 
             <div class="form-group" id="scope">
-                <label class="font-weight-bold" for="company_scope">Scope</label>
-                <select name="scope" class="form-control" id="company_scope">
+                <label class="font-weight-bold" for="applicant_scope">Scope</label>
+                <select name="scope" class="form-control" id="applicant_scope">
                     {% for scope_elem in form.scope %}
                         <option>{{ scope_elem }}</option>
                     {% endfor %}
@@ -87,6 +105,16 @@
 
                 {% if form.scope.errors %}
                     {% for error in form.scope.errors %}
+                        <small class="text-danger">{{ error|escape }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group" id="theme">
+                <select name="themes" class="from-control selectpicker" id="themes_applicant" data-live-search="true"
+                        multiple></select>
+                {% if form.themes.errors %}
+                    {% for error in form.themes.errors %}
                         <small class="text-danger">{{ error|escape }}</small>
                     {% endfor %}
                 {% endif %}
@@ -108,7 +136,7 @@
                     <label class="font-weight-bold" for="city">City</label>
                     <input name="city" type="text" class="form-control" id="city" value="{{ form.city.value }}">
                     <small id="city_help" class="form-text text-muted">
-                        We'll offer you applicants closer your company.
+                        We'll offer you companies closer you.
                     </small>
 
                     {% if form.city.errors %}
@@ -117,6 +145,7 @@
                         {% endfor %}
                     {% endif %}
                 </div>
+
                 <div class="form-group col-sm-6" id="zip">
                     <label class="font-weight-bold" for="zip">Zip Code</label>
                     <input name="zipCode" type="number" class="form-control" id="zip" value="{{ form.zipCode.value }}">
@@ -129,34 +158,34 @@
                 </div>
             </div>
 
-            <div class="form-group" id="url">
-                <label class="font-weight-bold" for="company_url">Url website</label>
-                <input name="url" type="url" class="form-control" id="company_url" value="{{ form.url.value }}">
-                <small id="url_help" class="form-text text-muted">
-                    https://www.jobinder.com
+            <div class="form-group" id="description">
+                <label class="font-weight-bold" for="description">Description</label>
+                <textarea name="description" class="form-control" id="description" rows="4">{{ form.description.value }}</textarea>
+                <small id="desc_help" class="form-text text-muted">
+                    Let companies know more about you.
                 </small>
 
-                {% if form.url.errors %}
-                    {% for error in form.url.errors %}
+                {% if form.description.errors %}
+                    {% for error in form.description.errors %}
                         <small class="text-danger">{{ error|escape }}</small>
                     {% endfor %}
                 {% endif %}
             </div>
 
-            <div class="form-group" id="logo">
-                <label class="font-weight-bold" for="logo" >Logo</label>
-                <input name="logo" type="file" class="form-control-file" id="logo" value="{{ form.logo.value }}">
-                <small class="text-primary"> current: {{ form.logo.value }}</small>
+            <div class="form-group" id="photo">
+                <label class="font-weight-bold" for="logo">Photo</label>
+                <input name="photo" type="file" class="form-control-file" id="photo">
+                <small class="text-primary">current: {{ form.photo.value }}</small>
 
-                {% if form.logo.errors %}
-                    {% for error in form.logo.errors %}
+                {% if form.photo.errors %}
+                    {% for error in form.photo.errors %}
                         <small class="text-danger">{{ error|escape }}</small>
                     {% endfor %}
                 {% endif %}
             </div>
+
             {% csrf_token %}
         </form>
-
     </div>
 
 {% endblock %}

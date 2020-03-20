@@ -14,13 +14,13 @@
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-sm-6 shadow-sm p-3 bg-white rounded">
+            <div class="col-sm-5 shadow-sm p-3 bg-white rounded">
 
                 <div class="my-4" id="signup_text">
                     <h4 class="font-weight-bold">Sign Up</h4>
                 </div>
 
-                <form method="post" id="applicantForm" data-themes-url="{% url 'load_themes' %}">
+                <form method="post" id="applicantForm" data-themes-url="{% url 'load_themes' %}" enctype="multipart/form-data">
 
                     <div class="form-group" id="username">
                         <label class="font-weight-bold" for="username">Username</label>
@@ -98,9 +98,9 @@
                     </div>
 
                     <div class="col-12 mb-3">
-                        <label class=" text-muted" for="extra_info">
+                        <small class=" text-muted" for="extra_info">
                             Add extra information, we'll offer you more precise job offers.
-                        </label>
+                        </small>
                         <input type="button"  id="extra_info" onclick="displayExtraInfoApplicant()"
                                style="color: orange;" class="fa btn btn-light" value="&#xf0fe">
                     </div>
@@ -181,8 +181,19 @@
                         {% endif %}
                     </div>
 
+                    <div class="form-group" id="photo" style="display: none">
+                        <label class="font-weight-bold" for="logo">Photo</label>
+                        <input name="photo" type="file" class="form-control-file" id="photo">
+
+                        {% if form.photo.errors %}
+                            {% for error in form.photo.errors %}
+                                <small class="text-danger">{{ error|escape }}</small>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
                     <div class="d-flex my-5">
-                        <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Sign Up"/>
+                        <input type="submit" onclick="return confirm('Are you sure?')" class="btn btn-secondary btn-lg btn-block" value="Sign Up"/>
                     </div>
 
                     {% csrf_token %}

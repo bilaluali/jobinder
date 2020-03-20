@@ -41,15 +41,6 @@
   transition: all 0.25s ease-in-out;
 }
 
-.btn-primary-soft {
-  background-color: rgba(51, 94, 234, .1);
-  color: #335eea;
-}
-
-.btn-success-soft {
-  background-color: rgba(66, 186, 150, 0.16);
-  color: #33ba91;
-}
 
 .btn-fill:hover{
   border-radius: 20px;
@@ -84,6 +75,46 @@ html *{
 }
 
 
+/* Image style */
+.img-profile{
+  border-style:solid;
+  border-width:2px;
+  border-color: #e83a30;
+  border-radius: 50%;
+  height: 50%;
+  width: 50%;
+}
+
+/* Backgrounds */
 .bg-grey{
   background-color: rgba(239,240,243,0.54)
 }
+
+.bg-gradient{
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #4242d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {background-position: 0% 50%;}
+	50% {background-position: 100% 50%;}
+	100% {background-position: 0% 50%;}
+}
+
+
+.warn {
+  color: #f6c23e;
+}
+
+
+/* Shape */
+.shape{
+  border-bottom-left-radius:50%;
+  border-bottom-right-radius:50%;
+}
+
+
+
+
+

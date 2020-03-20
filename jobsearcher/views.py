@@ -115,7 +115,7 @@ def isajax_req(request):
 def show_matches(request):
     company = get_object_or_404(Company, Q(id=request.user.id))
     context = {'company': company}
-    return render(request, 'profile/profile_matches.html', context)
+    return render(request, 'profile_company/profile_matches.html', context)
 
 
 @login_required()
@@ -130,7 +130,7 @@ def show_joboffers(request):
         # Will render full page.
         context['isajax'] = False
 
-    return render(request, 'profile/profile_joboffers.html', context)
+    return render(request, 'profile_company/profile_joboffers.html', context)
 
 
 @login_required()
@@ -151,7 +151,7 @@ def joboffer_create(request):
         form = JobOfferForm()
 
     args = {'form': form}
-    return render(request, 'profile/joboffer_form.html', args)
+    return render(request, 'profile_company/joboffer_form.html', args)
 
 
 @login_required()
@@ -173,7 +173,7 @@ def joboffer_edit(request, pk):
 
     args = {'form': form}
     args['isajax'] = True if isajax_req(request) else False
-    return render(request, 'profile/joboffer_form.html', args)
+    return render(request, 'profile_company/joboffer_form.html', args)
 
 
 @login_required()
@@ -205,5 +205,40 @@ def company_info_edit(request, pk):
 
     args = {'form': form, 'company': company}
     args['isajax'] = True if isajax_req(request) else False
-    return render(request, 'profile/company_form.html', args)
+    return render(request, 'profile_company/company_form.html', args)
 
+
+
+
+@login_required()
+def show_applicant_matches(request):
+    applicant = get_object_or_404(Applicant, Q(id=request.user.id))
+    context = {'applicant': applicant}
+    return render(request, 'profile_applicant/profile_matches.html', context)
+
+
+@login_required()
+def applicant_info_edit(request, pk):
+    applicant = get_object_or_404(Applicant, Q(pk=pk) & Q(id=request.user.id))
+
+    if request.method == "POST":
+        form = ApplicantForm(request.POST, request.FILES, instance=applicant)
+
+        if form.is_valid():
+            form.save()
+
+            #Re-login because of password update
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                do_login(request, user)
+            return redirect(applicant.get_absolute_url_edit())
+
+    else:
+        form = ApplicantForm(instance=applicant)
+
+    args = {'form': form, 'applicant': applicant}
+    args['isajax'] = True if isajax_req(request) else False
+    return render(request, 'profile_applicant/applicant_form.html', args)

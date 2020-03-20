@@ -38,13 +38,15 @@ function displayExtraInfoApplicant() {
     var desc_field = document.getElementById("description");
     var scope_field = document.getElementById("scope");
     var theme_field = document.getElementById("theme");
+    var photo_field = document.getElementById("photo");
 
     if (phone_field.style.display == "block" &&
         city_field.style.display == "block" &&
         zip_field.style.display == "block" &&
         desc_field.style.display == "block" &&
         scope_field.style.display == "block"&&
-        theme_field.style.display == "block")
+        theme_field.style.display == "block" &&
+        photo_field.style.display == "block")
     {
         phone_field.style.display = "none";
         city_field.style.display = "none";
@@ -52,6 +54,7 @@ function displayExtraInfoApplicant() {
         desc_field.style.display = "none";
         scope_field.style.display = "none";
         theme_field.style.display = "none";
+        photo_field.style.display = "none";
     }
     else {
         phone_field.style.display = "block";
@@ -60,6 +63,7 @@ function displayExtraInfoApplicant() {
         desc_field.style.display = "block";
         scope_field.style.display = "block";
         theme_field.style.display = "block";
+        photo_field.style.display = "block";
     }
 }
 
