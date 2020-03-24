@@ -242,3 +242,15 @@ def applicant_info_edit(request, pk):
     args = {'form': form, 'applicant': applicant}
     args['isajax'] = True if isajax_req(request) else False
     return render(request, 'profile_applicant/applicant_form.html', args)
+
+
+def searcher(request):
+    pass
+
+
+def match(request):
+    pass
+
+
+def _ajax_choice(request):
+    pass
