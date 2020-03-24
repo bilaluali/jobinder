@@ -2,14 +2,13 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
-from jobsearcher.models import *
-from jobsearcher.models import Scope
+from jobsearcher.models import Theme, Scope
 
 
 class Company(User):
     telephone = models.CharField(blank=True, null=True, max_length=50)
-    city = models.CharField(blank=True, null=True,max_length=50)
-    zipCode = models.CharField(blank=True, null=True,max_length=16)
+    city = models.CharField(blank=True, null=True, max_length=50)
+    zipCode = models.CharField(blank=True, null=True, max_length=16)
     url = models.URLField(blank=True, null=True)
     scope = models.ForeignKey(Scope, blank=True, null=True, related_name="companies", on_delete=models.SET_NULL)
     logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)

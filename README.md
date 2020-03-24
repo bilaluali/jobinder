@@ -47,11 +47,19 @@ Without this, the application cannot be used.
 - [ ] Profile section
     - [X] Allow edit profile 
     - [ ] Show current matches
+    - [ ] Company: register and modify own Job Offers
+- [x] Search section
+    - [x] Implement search algorithm
+        - [ ] (O) Show again repeated profiles in 1 week
+        - [ ] (O) Filter by nearby location
+    - [x] Allow 'LIKE' & 'NOPE' users
     - [x] Company: register and modify own Job Offers
-- [ ] Search section
-    - [ ] Implement search algorithm
-    - [ ] Allow 'LIKE' & 'NOPE' users
-- [ ] Match applicants-companies
+- [x] Search section
+    - [x] Implement search algorithm
+        - [ ] (O) Show again repeated profiles in 1 week
+        - [ ] (O) Filter by nearby location
+    - [x] Allow 'LIKE' & 'NOPE' users
+- [x] Match applicants-companies
     - [ ] Show contact data
     - [ ] (O) Send notification to email 
     - [ ] (O) Communication / Chat

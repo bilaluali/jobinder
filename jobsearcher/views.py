@@ -5,13 +5,21 @@ from django.contrib.auth import login as do_login
 from django.contrib.auth import logout as do_logout
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
+import json
+import random
+
+from jobsearcher.models import *
+from jobsearcher.decorators import ajax_required
+
 
 # Create your views here.
 from django.urls import reverse
 from django.utils import timezone
 
 from jobsearcher.forms import CompanyForm, ApplicantForm, JobOfferForm
-from jobsearcher.models import Company, JobOffer, Theme, Applicant, User
+
 
 
 def index(request):
@@ -208,8 +216,6 @@ def company_info_edit(request, pk):
     return render(request, 'profile_company/company_form.html', args)
 
 
-
-
 @login_required()
 def show_applicant_matches(request):
     applicant = get_object_or_404(Applicant, Q(id=request.user.id))
@@ -245,12 +251,108 @@ def applicant_info_edit(request, pk):
 
 
 def searcher(request):
-    pass
+    # Username needed and verification
+    is_applicant = Applicant.objects.filter(id=request.user.id).exists()
+    user = query_user(request.user.id, is_applicant)
+    try:
+        profile = query_joboffer_profile(user.id) if is_applicant else query_applicant_profile(user.id)
+    except IndexError:
+        profile = None
+
+    render_template = "joboffer.html" if is_applicant else "applicant.html"
+    return render(request, "searcher/searcher_"+render_template, {'profile': profile})
 
 
 def match(request):
-    pass
+    return render(request, "match/match.html")
 
 
+def query_applicant_profile(id_company):
+    try:
+        applicants_already_chosen = Choice.objects.filter(company__id=id_company)
+    except ObjectDoesNotExist:
+        applicants_already_chosen = None
+    if applicants_already_chosen:
+        try:
+            applicants = Applicant.objects.exclude(id__in=[choice.applicant.id for choice in applicants_already_chosen])
+            return random.choice(applicants)
+        except (IndexError, ObjectDoesNotExist):
+            return None
+    else:
+        return random.choice(Applicant.objects.all())
+
+
+def query_joboffer_profile(id_applicant):
+    try:
+        joboffers_already_chosen = Choice.objects.filter(applicant__id=id_applicant, company=None)
+    except ObjectDoesNotExist:
+        joboffers_already_chosen = None
+    if joboffers_already_chosen:
+        try:
+            jobOffers = JobOffer.objects.exclude(id__in=[choice.jobOffer.id for choice in joboffers_already_chosen])
+            return random.choice(jobOffers)
+        except (IndexError, ObjectDoesNotExist):
+            return None
+    else:
+        return random.choice(JobOffer.objects.all())
+
+
+def query_user(id, applicant=True):
+    return Applicant.objects.get(id=id) if applicant else Company.objects.get(id=id)
+
+
+def query_joboffer(id):
+    return JobOffer.objects.get(id=id)
+
+
+@ajax_required
 def _ajax_choice(request):
-    pass
+    user_pk = request.GET.get('user', None)
+    profile_pk = request.GET.get('profile', None)
+    like_bool = json.loads(request.GET.get('choice', 'false'))
+
+    is_applicant = Applicant.objects.filter(id=user_pk).exists()
+    usr = Applicant.objects.get(id=user_pk) if is_applicant else Company.objects.get(id=user_pk)
+    # Profile can be either JobOffer if applicant answered or Applicant if company answered
+    # Once saved, get the next query avoiding the previous choices
+    is_match = False
+    if is_applicant:
+        profile = query_joboffer(profile_pk)
+        Choice.objects.create(applicant=usr, jobOffer=profile, choice=like_bool)
+
+        # Check if it is a match.
+        if like_bool:
+            is_match = Choice.objects.filter(company__id=profile.company.id, applicant__id=user_pk, choice=True).exists()
+        return_data = {'is_match': is_match}
+        next_joboffer = query_joboffer_profile(user_pk)
+        if next_joboffer:
+            return_data = {
+                'is_applicant': is_applicant,
+                'is_match': is_match,
+                'id': next_joboffer.id,
+                'name': next_joboffer.name,
+                'company': next_joboffer.company.username,
+                'theme': next_joboffer.theme.name,
+                'description': next_joboffer.description
+            }
+    else:
+        profile = query_user(profile_pk)
+        Choice.objects.create(applicant=profile, company=usr, choice=like_bool)
+
+        if like_bool:
+            is_match = Choice.objects.filter(company__id=user_pk, applicant__id=profile.id, choice=True).exists()
+        return_data = {'is_match': is_match}
+        next_applicant = query_applicant_profile(user_pk)
+        if next_applicant:
+            return_data = {
+                'is_applicant': is_applicant,
+                'is_match': is_match,
+                'id': next_applicant.id,
+                'name': next_applicant.username,
+                'city': next_applicant.city,
+                'description': next_applicant.description,
+                'scope': next_applicant.scope.name,
+                'themes': [theme.name for theme in next_applicant.themes.all()]
+            }
+
+    return JsonResponse(return_data)

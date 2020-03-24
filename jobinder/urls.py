@@ -22,6 +22,10 @@ from django.views.generic import RedirectView, TemplateView
 from jobsearcher import views
 from jobinder import settings
 
+
+from django.conf.urls import url
+from jobsearcher import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
