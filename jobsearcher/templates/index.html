@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_block %}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white p-4">
+        <div class="container">
+            <a style="font-size: x-large" class="navbar-brand text-primary montserrat" href="{% url 'home' %}">Jobinder</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#inavbar" aria-controls="inavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="inavbar">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item active">
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'jobsearcher:applicant_profile_matches' %}">Profile</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'sign_out' %}">Sign Out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item active">
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'sign_in' %}">Sign In</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'sign_up_applicant' %}">Sign Up</a>
+                        </li>
+                         <li class="nav-item active mr-3">
+                            <a class="nav-link underline-warn btn-sm text-muted" href="#">Contact us</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link text-white font-weight-bold btn btn-secondary btn-sm" href="{% url 'home_company' %}">Employers</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% if user.is_authenticated %}
+
+
+        <section class="bg-gradient py-5">
+            <div class="container">
+                <div class="row py-5 mb-5">
+                    <div class="col-sm-12 text-center py-5">
+                        <h1 class="text-white mb-3">Let's like some offers.</h1>
+                        <h5 class="text-white mb-5">Finding a job has never been so easy<br>Press and explore.</h5>
+                        <div id="navigate_link">
+                            <a class="btn btn-warning text-white" href="#">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    {% else %}
+
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row align-items-center py-5 mb-5">
+                    <div class="col-sm-12 col-md-6 p-3">
+                        <h2>
+                            Get a job that <span class="warn">fits you</span> in few <br> swipes.
+                        </h2>
+                        <p style="line-height: 1.6" class="text-muted mb-6 mt-3">
+                            Navigate only through job offers according your scope easily.
+                            <br>Match with companies and get and interview.
+                        </p>
+                        <div class="mt-5" id="login_link">
+                            <a class="btn btn-warning text-white" href="{% url 'sign_up_applicant' %}">Get Started</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <img src="{% static "images/interview.svg" %}" class="img-fluid">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 p-5">
+                        <div class="mb-3 text-primary">
+                            <span style="font-size: 30px;">
+                                <i class="fas fa-link"></i>
+                            </span>
+                        </div>
+                        <h5>Job seekers and employers</h5>
+                        <p class="text-muted text-justify mb-5">
+                            We want match job seekers and employers directly. After a couple of likes
+                            and getting a match, you're able to chat or see contact data. No form applies.
+                            No signups. No fuss.
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12 col-md-4 p-5">
+                        <div class="mb-3 text-primary">
+                            <span style="font-size: 30px;">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                        <h5>Browse jobs</h5>
+                        <p class="text-muted text-justify mb-5">
+                            Search in jobinder is embarrassingly easy. Swipe job offers liking or noping them.
+                            Employers will like you, get a match and see each other contact details.
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12 col-md-4 p-5">
+                        <div class="mb-3 text-primary">
+                            <span style="font-size: 30px;">
+                                <i class="fas fa-filter"></i>
+                            </span>
+                        </div>
+                        <h5>Intelligent filters</h5>
+                        <p class="text-muted text-justify mb-5">
+                            Visualize only offers fit with your business scope. Our algorithm will filter automatically by
+                            your scopes and specialities, showing you best offers fit you. No worries and fun.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container-fluid" style="background-color: #EFF0F3">
+            <div class="container py-5">
+                <div class="row align-items-center">
+                    <div class="col-sm-12 col-md-6">
+                        <h6 class="font-weight-bold text-secondary">EMPLOYERS</h6>
+                        <h4 id="text-writer"></h4>
+                        <p class="text-muted">Start now! Swipe through thousands of seekers from your business scope.</p>
+                        <a class="btn btn-primary" href="#">Post</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <img src="{% static "images/seekers.svg" %}" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    {% endif %}
+
+    <script type="text/javascript" src="{% static 'JS/effects.js' %}"></script>
+
+{% endblock %}
