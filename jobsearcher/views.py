@@ -250,6 +250,7 @@ def applicant_info_edit(request, pk):
     return render(request, 'profile_applicant/applicant_form.html', args)
 
 
+@login_required
 def searcher(request):
     # Username needed and verification
     is_applicant = Applicant.objects.filter(id=request.user.id).exists()
