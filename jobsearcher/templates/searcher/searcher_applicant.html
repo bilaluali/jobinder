@@ -1,0 +1,53 @@
+{% extends "searcher/searcher.html" %}
+{% block searcher %}
+        <div class="col-sm-12 align-self-center">
+            <p style="background-color: rosybrown">{{ profile.username }}</p>
+        </div>
+        <div class="col-sm-12 align-self-center">
+            <p style="background-color: rosybrown">{{ profile.city }}</p>
+        </div>
+        <div class="col-sm-12 align-self-center">
+            <p style="background-color: rosybrown">{{ profile.scope }}</p>
+        </div>
+        {% for theme in profile.themes.all %}
+        <div class="col-sm-4 align-self-center">
+            <p style="background-color: rosybrown">{{ theme.name }}</p>
+        </div>
+       {% endfor %}
+        <div class="col-sm-12 align-self-center">
+            <p style="background-color: rosybrown">{{ profile.description }}</p>
+        </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        function change(data) {
+            if ('id' in data) {
+                let new_profile_div = "<div class='profile-container'>" +
+                    "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p>" + data.name + "</p>" +
+                    "</div>" +
+                    "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p>" + data.city + "</p>" +
+                    "</div>" +
+                    "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p>" + data.scope + "</p>" +
+                    "</div>";
+                Array.prototype.forEach.call(data.themes, theme => {
+                    new_profile_div += "<div class='col-sm-4 align-self-center'>" +
+                        "<p style='background-color: rosybrown'>" + theme + "</p></div>";
+                });
+                new_profile_div += "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p>" + data.description + "</p>" +
+                    "</div>";
+                $('div.profile-container').replaceWith(new_profile_div);
+            } else {
+            $('div.container').replaceWith("No more offers for you"); }
+            /*
+            $('.company').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.company+"</p>");
+            $('.name').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.name+"</p>");
+            $('.theme').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.theme+"</p>");
+            $('.description').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.description+"</p>");
+            */
+        }
+    </script>
+{% endblock %}

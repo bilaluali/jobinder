@@ -1,0 +1,7 @@
+    .profile-container {
+        padding-bottom: 2px;
+        padding-top: 8px;
+        margin: 10px;
+        transform-origin: 50% 99%;
+        position: relative;
+    }

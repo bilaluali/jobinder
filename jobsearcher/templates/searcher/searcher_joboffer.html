@@ -1,0 +1,45 @@
+{% extends "searcher/searcher.html" %}
+{% block searcher %}
+        <div class="col-sm-12 align-self-center">
+            <p class="inner company" style="background-color: aqua">{{ profile.company }}</p>
+        </div>
+        <div class="col-sm-12 align-self-center inner name">
+            <p class="inner name" style="background-color: aqua">{{ profile.name }}</p>
+        </div>
+        <div class="col-sm-12 align-self-center inner theme">
+            <p class="inner theme" style="background-color: aqua">{{ profile.theme }}</p>
+        </div>
+        <div class="col-sm-12 align-self-center inner description">
+            <p class="inner description" style="background-color: aqua">{{ profile.description }}</p>
+        </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        function change(data) {
+            if ('id' in data) {
+                let new_profile_div = "<div class='profile-container'>" +
+                    "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p class=\"inner company\" >" + data.company + "</p>" +
+                    "</div>" +
+                    "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p class=\"inner company\">" + data.name + "</p>" +
+                    "</div>" +
+                    "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p class=\"inner company\">" + data.theme + "</p>" +
+                    "</div>" +
+                    "<div class=\"col-sm-12 align-self-center\">" +
+                    "<p class=\"inner company\">" + data.description + "</p>" +
+                    "</div>";
+                $('div.profile-container').replaceWith(new_profile_div);
+            } else {
+                $('div.container').replaceWith("No more offers for you");
+            }
+            /*
+            $('.company').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.company+"</p>");
+            $('.name').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.name+"</p>");
+            $('.theme').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.theme+"</p>");
+            $('.description').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.description+"</p>");
+            */
+        }
+    </script>
+{% endblock %}

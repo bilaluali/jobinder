@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/animated_search.css' %}">
+    <div class="container">
+    {% if profile %}
+        <div id="current" class=" row profile-container">
+            {% block searcher %}
+            {% endblock %}
+        </div>
+
+        <div class="row button-container">
+            <div class="col-sm-2">
+                <button id="but-like" class="btn btn-outline-success like">
+                    Like
+                </button>
+            </div>
+            <div class="col-sm-8"></div>
+            <div class="col-sm-2">
+                <button id="but-nope" class="btn btn-outline-danger nope">
+                    Nope
+                </button>
+            </div>
+        </div>
+    {% else %}
+        It seems you saw all the offers! You should wait for your answer...
+    {% endif %}
+    </div>
+    <script type="text/javascript">
+        let profile_id = "{{ profile.id }}";
+        let user_id = {{ user.id }};
+        $("#but-like").on('click', function() {
+            $('.profile-container').animate({
+                left: '-=100px',
+                opacity: 0,
+            }, function () {
+                $.ajax({
+                url: '{% url "ajax_search_button" %}',
+                data: {
+                    'profile': profile_id,
+                    'user': user_id,
+                    'choice': true
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.is_match) {
+                        if (confirm("You've got a match! Do you want to contact right now?")) {
+                            location.href = {% url 'match' %};
+                        }
+                    }
+                    profile_id = data.id;
+                    change(data);
+                },
+            });
+            });
+        });
+        $("#but-nope").on('click', function() {
+            $('.profile-container').animate({
+                left: '+=100px',
+                opacity: 0,
+            }, function () {
+                $.ajax({
+                url: '{% url "ajax_search_button" %}',
+                data: {
+                    'profile': profile_id,
+                    'user': user_id,
+                    'choice': false
+                },
+                dataType: 'json',
+                success: function (data) {
+                    profile_id = data.id;
+                    change(data)
+                },
+            });
+            });
+        });
+    </script>
+    {% block javascript %}
+    {% endblock %}
+{% endblock %}
