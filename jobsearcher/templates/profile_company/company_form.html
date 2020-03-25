@@ -24,7 +24,7 @@
 
             <div class="form-group" id="company">
                 <label class="font-weight-bold" for="company_name">Company</label>
-                <input name="username" type="text" class="form-control" id="company_name"
+                <input readonly name="username" type="text" class="form-control" id="company_name"
                        value="{{ form.username.value }}">
                 <small id="user_help" class="form-text text-muted">You will use this to Sign In.</small>
 
@@ -81,7 +81,7 @@
                 <label class="font-weight-bold" for="company_scope">Scope</label>
                 <select name="scope" class="form-control" id="company_scope">
                     {% for scope_elem in form.scope %}
-                        <option>{{ scope_elem }}</option>
+                        <option style="display: none">{{ scope_elem }}</option>
                     {% endfor %}
                 </select>
 

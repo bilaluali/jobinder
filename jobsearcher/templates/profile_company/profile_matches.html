@@ -1,4 +1,63 @@
-{% extends "profile_company/profile_base.html" %}
-
+{% extends isajax|yesno:"profile_company/ajax_base.html,profile_company/profile_base.html" %}
 {% block profile_block %}
+
+    <div class="col-sm-12">
+
+        <div class="row">
+            <div class="col-sm-6 px-4">
+                    <span style="font-size: 24px; color: #eeaa66" class="mr-1">
+                        <i class="fas fa-link"></i>
+                    </span>
+                <h5 class="font-weight-bold text-secondary d-inline">Matches<sup>{{ matches | length }}</sup></h5>
+            </div>
+            <div class="col-sm-6 text-muted text-right px-4">
+                {% now "jS F Y H:i" %}
+            </div>
+        </div>
+        <div class="row">
+        {% for match in matches %}
+
+            <div class="col-sm-6 col-lg-4 px-4 py-4">
+                <div class="card border-0 shadow-sm" >
+                    <div class="row card-body">
+                        <div class="col-sm-4 pr-1">
+                            {% if match.photo %}
+                                <img src="{{ MEDIA_URL }}{{ match.photo.url }}" class="img-thumbnail" alt="...">
+                            {% else %}
+                                <img src="{{ MEDIA_URL }}{{ default.url }}" class="img-thumbnail" alt="...">
+                            {% endif %}
+                        </div>
+                        <div class="col-sm-8 align-self-center">
+                            <h6 class="font-weight-bold mb-0">{{ match.first_name }} {{ match.last_name }}</h6>
+                            {% for theme in match.themes.all %}
+                                <small class="">
+                                    <span style="background-color:#faddd1; color:#e86830" class="badge">
+                                        {{ theme }}
+                                    </span>
+                                </small>
+                            {% endfor %}
+                        </div>
+
+                        <div class="col-sm-12 my-2">
+                            <small class="text-muted">
+                                {{ match.city }}
+                                <br>
+                                <i class="fas fa-link text-primary"></i>
+                                Business Intelligence Junior
+                            </small>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <button style="background-color: #EFF0F3" type="button" class="btn btn-light btn-sm btn-block">Contact</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        {% endfor %}
+        </div>
+    </div>
+    
 {% endblock %}

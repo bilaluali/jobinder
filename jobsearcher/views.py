@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as do_login
 from django.contrib.auth import logout as do_logout
+from django.core import serializers
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 
 # Create your views here.
 from django.urls import reverse
@@ -87,6 +89,7 @@ def sign_up_applicant(request):
 
         if form.is_valid():
             form.save()
+            form.save_m2m()  # Many to many themes field.
             return redirect(reverse('home'))
     else:
         form = ApplicantForm()
@@ -98,8 +101,8 @@ def sign_up_applicant(request):
 # Function to load themes based on scope election in applicant form.
 def load_themes(request):
     scope_id = request.GET.get('scope')
-    themes = Theme.objects.filter(Q(scope__id=scope_id)).order_by('name')
-    return render(request, 'sign/themes_dropdownlist.html', {'themes': themes})
+    themes = Theme.objects.filter(Q(scope__id=scope_id)).order_by('name').values()
+    return JsonResponse({"themes": list(themes)})
 
 
 def sign_out(request):
@@ -113,8 +116,16 @@ def isajax_req(request):
 
 @login_required()
 def show_matches(request):
+    matches = Applicant.objects.all()
     company = get_object_or_404(Company, Q(id=request.user.id))
-    context = {'company': company}
+    context = {'matches': matches, 'company': company}
+
+    if isajax_req(request):
+        context['isajax'] = True
+    else:
+        # Will render full page.
+        context['isajax'] = False
+
     return render(request, 'profile_company/profile_matches.html', context)
 
 
@@ -122,7 +133,7 @@ def show_matches(request):
 def show_joboffers(request):
     joboffers_list = JobOffer.objects.filter(Q(last_modified__lte=timezone.now()) & Q(company__id=request.user.id)).order_by('-last_modified')
     company = get_object_or_404(Company, Q(id=request.user.id))
-    context = {'joboffers_list': joboffers_list, 'company':company}
+    context = {'joboffers_list': joboffers_list, 'company': company}
 
     if isajax_req(request):
         context['isajax'] = True
@@ -226,6 +237,7 @@ def applicant_info_edit(request, pk):
 
         if form.is_valid():
             form.save()
+            form.save_m2m()
 
             #Re-login because of password update
             username = form.cleaned_data['username']

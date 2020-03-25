@@ -105,30 +105,33 @@
                                style="color: orange;" class="fa btn btn-light" value="&#xf0fe">
                     </div>
 
-                    <div class="form-group" id="scope" style="display:none">
-                        <label class="font-weight-bold" for="applicant_scope">Scope</label>
-                        <select name="scope" class="form-control" id="applicant_scope">
-                            {% for scope_elem in form.scope %}
-                                <option>{{ scope_elem }}</option>
-                            {% endfor %}
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group col-sm-6" id="scope" style="display:none">
+                            <label class="font-weight-bold" for="applicant_scope">Scope</label>
+                            <select name="scope" class="form-control selectpicker" id="applicant_scope" data-live-search="true">
+                                {% for scope_elem in form.scope %}
+                                    <option style="display:none">{{ scope_elem }}</option>
+                                {% endfor %}
+                            </select>
 
-                        {% if form.scope.errors %}
-                            {% for error in form.scope.errors %}
-                                <small class="text-danger">{{ error|escape }}</small>
-                            {% endfor %}
-                        {% endif %}
+                            {% if form.scope.errors %}
+                                {% for error in form.scope.errors %}
+                                    <small class="text-danger">{{ error|escape }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group col-sm-6" id="theme" style="display:none">
+                            <label class="font-weight-bold" for="themes_applicant">Themes</label>
+                            <select name="themes" class="from-control selectpicker" multiple id="themes_applicant" data-live-search="true">
+                            </select>
+                            {% if form.themes.errors %}
+                                {% for error in form.themes.errors %}
+                                    <small class="text-danger">{{ error|escape }}</small>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
-
-                    <div class="form-group" id="theme" style="display:none">
-                        <select name="themes" class="from-control selectpicker" id="themes_applicant" data-live-search="true" multiple></select>
-                        {% if form.themes.errors %}
-                            {% for error in form.themes.errors %}
-                                <small class="text-danger">{{ error|escape }}</small>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-
                     <div class="form-group" id="phone" style="display:none">
                         <label class="font-weight-bold" for="phone">Telephone</label>
                         <input name="telephone" type="tel" class="form-control" id="phone">
@@ -212,22 +215,6 @@
 
     </div>
 
-    <script type="text/javascript">
-
-        $("#applicant_scope").change(function () {
-            var url = $("#applicantForm").attr("data-themes-url");
-            var scopeId = $(this).val();
-            $.ajax({
-                url: url,
-                data: {
-                    'scope': scopeId
-                },
-                success: function (data) {
-                    $("#themes_applicant").html(data);
-                    $('#themes_applicant').selectpicker('refresh');
-                }
-            });
-        });
-    </script>
+    <script type="text/javascript" src="{% static 'JS/themes_dropdown.js' %}"></script>
 
 {% endblock %}
