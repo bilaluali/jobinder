@@ -9,7 +9,6 @@ $("#applicant_scope").change(function () {
         success: function (json_data) {
             var x;
             const themes = json_data.themes;
-            console.log(themes);
             const themes_div = $("#themes_applicant");
             themes_div.empty();
             for (x in themes) {

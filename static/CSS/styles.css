@@ -42,21 +42,6 @@
 }
 
 
-.btn-fill:hover{
-  border-radius: 20px;
-  background-color: rgba(51, 94, 234, .1);
-}
-
-.btn-fill:focus{
-  border-radius: 20px;
-  background: salmon;
-}
-
-.btn-fill:visited{
-  border-radius: 20px;
-  background: salmon;
-}
-
 
 /* Fonts */
 html *{

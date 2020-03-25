@@ -1,6 +1,5 @@
 function ajax_profile(url_name, div_id)
 {
-    console.log("hello");
     var req = new XMLHttpRequest(); // Create the request.
     req.open('GET', url_name);
     req.setRequestHeader("X-Requested-With" ,"XMLHttpRequest");

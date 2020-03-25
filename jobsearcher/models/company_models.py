@@ -12,7 +12,7 @@ class Company(User):
     zipCode = models.CharField(blank=True, null=True,max_length=16)
     url = models.URLField(blank=True, null=True)
     scope = models.ForeignKey(Scope, blank=True, null=True, related_name="companies", on_delete=models.SET_NULL)
-    logo = models.ImageField(upload_to="company_logos/", blank=True, null=True)
+    logo = models.ImageField(upload_to="company_logos/", default='applicant_logos/default.png', blank=True, null=True)
 
     modified_by = models.ForeignKey(User, null=True, related_name="companies", on_delete=models.SET_NULL)
     deleted = models.BooleanField(default=False, null=False)

@@ -114,6 +114,8 @@ def isajax_req(request):
     return request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
 
+# Company
+
 @login_required()
 def show_matches(request):
     matches = Applicant.objects.all()
@@ -221,10 +223,21 @@ def company_info_edit(request, pk):
 
 
 
+
+# Applicant
+
 @login_required()
 def show_applicant_matches(request):
     applicant = get_object_or_404(Applicant, Q(id=request.user.id))
-    context = {'applicant': applicant}
+    matches = Company.objects.all()
+    context = {'applicant': applicant, 'matches': matches}
+
+    if isajax_req(request):
+        context['isajax'] = True
+    else:
+        # Will render full page.
+        context['isajax'] = False
+
     return render(request, 'profile_applicant/profile_matches.html', context)
 
 

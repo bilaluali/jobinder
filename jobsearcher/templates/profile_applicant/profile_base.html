@@ -67,8 +67,9 @@
 
                 <div class="sidebar">
                     <ul class="nav flex-column">
-                        <li class="nav-item btn-fill">
-                            <a id="matches" class="nav-link active  text-muted p-3" href="#">
+                        <li class="nav-item">
+                            <a id="matches" onclick="ajax_profile('{% url 'jobsearcher:applicant_profile_matches' %}','profile_options')"
+                               class="nav-link active  text-muted  p-3" href="#">
                                 <i class="fas fa-user-friends mr-2"></i>
                                 Matches
                             </a>

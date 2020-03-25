@@ -27,10 +27,10 @@
                                 <img src="{{ MEDIA_URL }}{{ default.url }}" class="img-thumbnail" alt="...">
                             {% endif %}
                         </div>
-                        <div class="col-sm-8 align-self-center">
+                        <div class="col-sm-8 pt-2">
                             <h6 class="font-weight-bold mb-0">{{ match.first_name }} {{ match.last_name }}</h6>
                             {% for theme in match.themes.all %}
-                                <small class="">
+                                <small>
                                     <span style="background-color:#faddd1; color:#e86830" class="badge">
                                         {{ theme }}
                                     </span>

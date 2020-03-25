@@ -5,7 +5,7 @@ function displayExtraInfoCompany() {
     var url_field = document.getElementById("url");
     var scope_field = document.getElementById("scope");
     var logo_field = document.getElementById("logo");
-    var fields = [phone_field, city_field, zip_field, url_field, scope_field, logo_field]
+    var fields = [phone_field, city_field, zip_field, url_field, scope_field, logo_field];
 
     for (var i = 0; i < fields.length; i++) {
         if (fields[i].style.display == "block") {
