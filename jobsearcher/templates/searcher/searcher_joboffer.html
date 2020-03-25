@@ -5,53 +5,40 @@
 {% endblock %}
 
 {% block searcher %}
-        <div class="col-sm-12 align-self-center">
+        <div class="card bg-light border-dark img-wrapper">
             {% if profile.company.logo %}
-                <img class="img-fluid" src="{{ profile.company.logo.url }}" alt="...">
+                <img id="profile-img" class="card-img-top" src="{{ profile.company.logo.url }}" alt="...">
             {% else %}
-                <img class="img-fluid" src="/media/company_logos/default.png" alt="...">
+                <img id="profile-img" class="card-img-top" src="/media/company_logos/default.png" alt="...">
             {% endif %}
+
+            <div class="card-body">
+                <h5 it="title" class="card-title montserrat">{{ profile.name }} - {{ profile.company.username }}, {{ profile.city }}</h5>
+                <small id="themes" class="ml-3">
+                    <span style="background-color:#fad3d1; color:#e83a30" class="badge">
+                        {{ profile.theme }}
+                    </span>
+                </small>
+                <p id="description" class="card-text">{{ profile.description }}</p>
+            </div>
         </div>
-        <div class="col-sm-12 align-self-center">
-            <p class="inner company" style="background-color: aqua">{{ profile.company }}</p>
-        </div>
-        <div class="col-sm-12 align-self-center inner name">
-            <p class="inner name" style="background-color: aqua">{{ profile.name }}</p>
-        </div>
-        <div class="col-sm-12 align-self-center inner theme">
-            <p class="inner theme" style="background-color: aqua">{{ profile.theme }}</p>
-        </div>
-        <div class="col-sm-12 align-self-center inner description">
-            <p class="inner description" style="background-color: aqua">{{ profile.description }}</p>
-        </div>
+
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
         function change(data) {
             if ('id' in data) {
-                let new_profile_div = "<div class='profile-container'>" +
-                    "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p class=\"inner company\" >" + data.company + "</p>" +
-                    "</div>" +
-                    "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p class=\"inner company\">" + data.name + "</p>" +
-                    "</div>" +
-                    "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p class=\"inner company\">" + data.theme + "</p>" +
-                    "</div>" +
-                    "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p class=\"inner company\">" + data.description + "</p>" +
-                    "</div>";
-                $('div.profile-container').replaceWith(new_profile_div);
+                $('#current').css({'left':'', 'opacity':''});
+                $('#profile-img').attr('src', data.photo_src);
+                $('#title').replaceWith('<h5 it="title" class="card-title montserrat">'+data.name+
+                        ' - '+data.company+', '+data.city+'</h5>');
+                $('#themes').replaceWith('<small id="themes" class="ml-3">' +
+                    '<span style="background-color:#fad3d1; color:#e83a30" class="badge">' +
+                    data.theme+'</span></small>');
+                $('#description').text(data.description);
             } else {
-                $('div.container').replaceWith("No more offers for you");
+                $('div.jumbotron').replaceWith("No more offers for you");
             }
-            /*
-            $('.company').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.company+"</p>");
-            $('.name').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.name+"</p>");
-            $('.theme').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.theme+"</p>");
-            $('.description').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.description+"</p>");
-            */
         }
     </script>
 {% endblock %}

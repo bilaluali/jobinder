@@ -265,6 +265,8 @@ def searcher(request):
 
 
 def match(request):
+    profile_id = request.POST.get('profile_id', None)
+    print(profile_id)
     return render(request, "match/match.html")
 
 
@@ -333,9 +335,14 @@ def _ajax_choice(request):
                 'id': next_joboffer.id,
                 'name': next_joboffer.name,
                 'company': next_joboffer.company.username,
+                'city': next_joboffer.company.city,
                 'theme': next_joboffer.theme.name,
                 'description': next_joboffer.description
             }
+            if next_joboffer.company.logo:
+                return_data['photo_src'] = next_joboffer.company.logo.url
+            else:
+                return_data['photo_src'] = '/media/company_logos/default.png'
     else:
         profile = query_user(profile_pk)
         Choice.objects.create(applicant=profile, company=usr, choice=like_bool)

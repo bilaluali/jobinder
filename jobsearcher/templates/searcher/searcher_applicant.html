@@ -17,35 +17,6 @@
                 <p  class="card-text">{{ profile.description }}</p>
             </div>
         </div>
-        {% comment %}
-        <div class="row d-flex justify-content-center img-wrapper">
-            <div class="col-sm-6">
-                {% if profile.photo %}
-                    <img class="img-fluid" src="{{ profile.photo.url }}" alt="...">
-                {% else %}
-                    <img class="img-fluid" src="/media/applicant_logos/default.png" alt="...">
-                {% endif %}
-            </div>
-        </div>
-        <div class="row d-flex justify-content-center">
-            <div class="col-sm-12">
-                <p style="background-color: rosybrown">{{ profile.username }}</p>
-            </div>
-            <div class="col-sm-12 align-self-center">
-                <p style="background-color: rosybrown">{{ profile.city }}</p>
-            </div>
-            <div class="col-sm-12 align-self-center">
-                <p style="background-color: rosybrown">{{ profile.scope }}</p>
-            </div>
-            {% for theme in profile.themes.all %}
-            <div class="col-sm-4 align-self-center">
-                <p style="background-color: rosybrown">{{ theme.name }}</p>
-            </div>
-           {% endfor %}
-            <div class="col-sm-12 align-self-center">
-                <p style="background-color: rosybrown">{{ profile.description }}</p>
-            </div>
-            {% endcomment %}
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
