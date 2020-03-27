@@ -9,6 +9,8 @@ function ajax_profile(url_name, div_id)
             document.getElementById(div_id).innerHTML = req.responseText;
             history.replaceState(history.state, '', url_name);
         }
+        // Will get scripts and evaluate them.
+        eval($(req.responseText).find("script").text())
     };
     // Send request
     req.send();
