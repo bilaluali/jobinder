@@ -54,7 +54,7 @@
                                 </div>
 
                                 <div class="col-sm-3 mt-auto text-right">
-                                    <a id="edit" href="#" onclick="ajax_request('{{ offer.get_absolute_url_edit }}','editForm')" data-target="#editModal" data-toggle="modal" class="btn btn-primary-soft btn-sm rounded-pill">
+                                    <a id="edit" href="#" onclick="ajax_profile('{{ offer.get_absolute_url_edit }}','editForm')" data-target="#editModal" data-toggle="modal" class="btn btn-primary-soft btn-sm rounded-pill">
                                         <i class="far fa-edit"></i>
                                     </a>
                                     <a id="delete" href="{{ offer.get_absolute_url_delete }}"  onclick="return confirm('Are you sure?')" class="btn btn-primary-soft btn-sm rounded-pill">
@@ -87,13 +87,12 @@
             </div>
         </div>
 
+        <script id="popover_script" type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+        </script>
     </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-    </script>
 
 {% endblock %}
 

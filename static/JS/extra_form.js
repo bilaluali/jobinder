@@ -5,31 +5,17 @@ function displayExtraInfoCompany() {
     var url_field = document.getElementById("url");
     var scope_field = document.getElementById("scope");
     var logo_field = document.getElementById("logo");
+    var fields = [phone_field, city_field, zip_field, url_field, scope_field, logo_field];
 
-    if (phone_field.style.display == "block" &&
-        city_field.style.display == "block" &&
-        zip_field.style.display == "block" &&
-        url_field.style.display == "block" &&
-        scope_field.style.display == "block" &&
-        logo_field.style.display == "block")
-    {
-        phone_field.style.display = "none";
-        city_field.style.display = "none";
-        zip_field.style.display = "none";
-        url_field.style.display = "none";
-        scope_field.style.display = "none";
-        logo_field.style.display = "none";
+    for (var i = 0; i < fields.length; i++) {
+        if (fields[i].style.display == "block") {
+            fields[i].style.display = "none";
+        } else {
+            fields[i].style.display = "block";
+        }
     }
-    else {
-        phone_field.style.display = "block";
-        city_field.style.display = "block";
-        zip_field.style.display = "block";
-        url_field.style.display = "block";
-        scope_field.style.display = "block";
-        logo_field.style.display = "block";
-    }
+
 }
-
 
 function displayExtraInfoApplicant() {
     var phone_field = document.getElementById("phone");
@@ -39,31 +25,15 @@ function displayExtraInfoApplicant() {
     var scope_field = document.getElementById("scope");
     var theme_field = document.getElementById("theme");
     var photo_field = document.getElementById("photo");
+    var fields = [phone_field, city_field, zip_field, desc_field, scope_field, theme_field, photo_field];
 
-    if (phone_field.style.display == "block" &&
-        city_field.style.display == "block" &&
-        zip_field.style.display == "block" &&
-        desc_field.style.display == "block" &&
-        scope_field.style.display == "block"&&
-        theme_field.style.display == "block" &&
-        photo_field.style.display == "block")
-    {
-        phone_field.style.display = "none";
-        city_field.style.display = "none";
-        zip_field.style.display = "none";
-        desc_field.style.display = "none";
-        scope_field.style.display = "none";
-        theme_field.style.display = "none";
-        photo_field.style.display = "none";
-    }
-    else {
-        phone_field.style.display = "block";
-        city_field.style.display = "block";
-        zip_field.style.display = "block";
-        desc_field.style.display = "block";
-        scope_field.style.display = "block";
-        theme_field.style.display = "block";
-        photo_field.style.display = "block";
+    for (var i=0; i<fields.length; i++){
+        if (fields[i].style.display == "block"){
+            fields[i].style.display = "none";
+        }
+        else{
+            fields[i].style.display = "block";
+        }
     }
 }
 

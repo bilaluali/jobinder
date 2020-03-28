@@ -3,7 +3,7 @@
 
 {% block body_block %}
 
-    <div id="content" class="container-fluid bg-grey">
+    <div style="min-height:100vh" id="content" class="container-fluid bg-grey">
 
             <div class="col-md-9 col-lg-10 p-4">
                 <nav class="navbar navbar-expand-lg navbar-light m-0">
@@ -52,21 +52,31 @@
                 <div id="sidebar_header" class="row">
                     <div class="col-sm-12 text-center my-4">
                         <img style="height: 60px; width: 60px;" class="img-thumbnail rounded-circle mb-1" src="{{ MEDIA_URL }}{{ applicant.photo.url }}" alt="...">
-                        <h6 class="montserrat">{{ applicant.first_name }} {{ applicant.last_name }}</h6>
+                        <h6 class="montserrat">
+                            {{ applicant.first_name }} {{ applicant.last_name }}
+                        </h6>
+                        {% for th in applicant.themes.all %}
+                            <small class="">
+                                <span style="background-color:#faddd1; color:#e86830" class="badge">
+                                    {{ th }}
+                                </span>
+                            </small>
+                        {% endfor %}
                     </div>
                 </div>
 
                 <div class="sidebar">
                     <ul class="nav flex-column">
-                        <li class="nav-item btn-fill">
-                            <a id="matches" class="nav-link active  text-muted p-3" href="#">
+                        <li class="nav-item">
+                            <a id="matches" onclick="ajax_profile('{% url 'jobsearcher:applicant_profile_matches' %}','profile_options')"
+                               class="nav-link active  text-muted  p-3" href="#">
                                 <i class="fas fa-user-friends mr-2"></i>
                                 Matches
                             </a>
                         </li>
                         <li class="nav-item">
 
-                            <a id="info" onclick="ajax_request('{{ applicant.get_absolute_url_edit }}','profile_options')"
+                            <a id="info" onclick="ajax_profile('{{ applicant.get_absolute_url_edit }}','profile_options')"
                                class="nav-link active text-muted p-3" href="#">
                                 <i class="far fa-address-card mr-2"></i>
                                 Information
@@ -91,4 +101,5 @@
         </div>
 
     </div>
+
 {% endblock %}

@@ -1,4 +1,4 @@
-function ajax_request(url_name, div_id)
+function ajax_profile(url_name, div_id)
 {
     var req = new XMLHttpRequest(); // Create the request.
     req.open('GET', url_name);
@@ -7,9 +7,10 @@ function ajax_request(url_name, div_id)
         // State == 4, server response ok.
         if (req.readyState === 4) {
             document.getElementById(div_id).innerHTML = req.responseText;
-            //history.pushState({}, 'null', url_name);
             history.replaceState(history.state, '', url_name);
         }
+        // Will get scripts and evaluate them.
+        eval($(req.responseText).find("script").text())
     };
     // Send request
     req.send();
