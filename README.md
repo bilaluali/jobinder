@@ -47,7 +47,7 @@ Without this, the application cannot be used.
 - [ ] Profile section
     - [X] Allow edit profile 
     - [ ] Show current matches
-    - [ ] Company: register and modify own Job Offers
+    - [x] Company: register and modify own Job Offers
 - [x] Search section
     - [x] Implement search algorithm
         - [ ] (O) Show again repeated profiles in 1 week
