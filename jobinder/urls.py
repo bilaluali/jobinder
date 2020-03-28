@@ -42,9 +42,7 @@ urlpatterns = [
     path('signin/', views.sign_in, name='sign_in'),
     path('signout/', views.sign_out, name='sign_out'),
 
-    url(r'^searcher/$', views.searcher, name='searcher'),
-
-    url(r'^match/$', views.match, name='match'),
+    url(r'^jobsearcher/searcher/$', views.searcher, name='searcher'),
 
     # AJAX
     # Path to get themes of scope via AJAX.

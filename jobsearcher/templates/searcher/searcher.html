@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load extra_tags %}
 
 {% block body_block %}
     <link rel="stylesheet" type="text/css" href="{% static 'CSS/animated_search.css' %}">
@@ -32,7 +31,7 @@
     <script type="text/javascript">
         let profile_id = "{{ profile.id }}";
         let user_id = {{ user.id }};
-        $("#but-like").on('click', function() {
+        $("button.like").on('click', function() {
             $('.profile-container').animate({
                 left: '-=100px',
                 opacity: 0,
@@ -48,9 +47,11 @@
                 success: function (data) {
                     if (data.is_match) {
                         if (confirm("You've got a match! Do you want to contact right now?")) {
-                            $.post("{% url 'match' %}", {'profile_id': profile_id, 'is_applicant': data.is_applicant,
-                                'csrfmiddlewaretoken': '{{ csrf_token }}'});
-                            location.href={% url 'match' %};
+                            {% if applicant %}
+                                location.href='{% url 'jobsearcher:applicant_profile_matches' %}';
+                            {% else %}
+                                location.href='{% url 'jobsearcher:company_profile_matches' %}';
+                            {% endif %}
                         }
                     }
                     profile_id = data.id;
@@ -59,7 +60,7 @@
             });
             });
         });
-        $("#but-nope").on('click', function() {
+        $("button.nope").on('click', function() {
             $('.profile-container').animate({
                 left: '+=100px',
                 opacity: 0,
@@ -80,6 +81,4 @@
             });
         });
     </script>
-    {% block javascript %}
-    {% endblock %}
 {% endblock %}

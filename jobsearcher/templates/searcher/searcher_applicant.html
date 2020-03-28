@@ -5,16 +5,33 @@
 {% endblock %}
 
 {% block searcher %}
-        <div class="card bg-light border-dark img-wrapper">
-            {% if profile.photo %}
-                <img class="card-img-top" src="{{ profile.photo.url }}" alt="...">
-            {% else %}
-                <img class="card-img-top" src="/media/applicant_logos/default.png" alt="...">
-            {% endif %}
+            <div style="border-radius: 25px" class="card border-0 shadow-sm">
 
-            <div class="card-body">
-                <h5 class="card-title montserrat">{{ profile.username }}, {{ profile.city }}</h5>
-                <p  class="card-text">{{ profile.description }}</p>
+            <div class="row p-4">
+                <div class="col-sm-4">
+                    {% if profile.photo %}
+                        <img id="profile-img" class="img-thumbnail rounded-circle" src="{{ profile.photo.url }}" alt="...">
+                    {% else %}
+                        <img id="profile-img" class="img-thumbnail rounded-circle" src="/media/applicant_logos/default.png" alt="...">
+                    {% endif %}
+                </div>
+
+                <div id='themes' class="col-sm-8 text-right">
+                    {% for theme in profile.themes.all %}
+                        <span style="background-color:#fad3d1; color:#e83a30" class="badge">
+                            {{ theme }}
+                        </span>
+                    {% endfor %}
+                </div>
+                <div class="col-12 p-4">
+                    <h6 id="title" class="card-title montserrat">{{ profile.username }}, {{ profile.city }}</h6>
+                    <p class="card-text text-justify">
+                        <small id="description" class="text-muted">
+                            {{ profile.description }}
+                        </small>
+                    </p>
+                </div>
+
             </div>
         </div>
 {% endblock %}
@@ -22,32 +39,18 @@
     <script type="text/javascript">
         function change(data) {
             if ('id' in data) {
-                let new_profile_div = "<div class='profile-container'>" +
-                    "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p>" + data.name + "</p>" +
-                    "</div>" +
-                    "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p>" + data.city + "</p>" +
-                    "</div>" +
-                    "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p>" + data.scope + "</p>" +
-                    "</div>";
+                $('#current').css({'left':'', 'opacity':''});
+                $('#profile-img').attr('src', data.photo_src);
+                let themes_html = '<div id="themes" class="col-sm-8 text-right">';
                 Array.prototype.forEach.call(data.themes, theme => {
-                    new_profile_div += "<div class='col-sm-4 align-self-center'>" +
-                        "<p style='background-color: rosybrown'>" + theme + "</p></div>";
+                    themes_html += '<span style="background-color:#fad3d1; color:#e83a30" class="badge">'+theme+'</span>';
                 });
-                new_profile_div += "<div class=\"col-sm-12 align-self-center\">" +
-                    "<p>" + data.description + "</p>" +
-                    "</div>";
-                $('div.profile-container').replaceWith(new_profile_div);
+                $('#themes').replaceWith(themes_html);
+                $('#title').replaceWith('<h6 id="title" class="card-title montserrat">'+
+                    data.name + ', '+data.city+'</h6>');
+                $('#description').text(data.description);
             } else {
-            $('div.container').replaceWith("No more offers for you"); }
-            /*
-            $('.company').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.company+"</p>");
-            $('.name').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.name+"</p>");
-            $('.theme').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.theme+"</p>");
-            $('.description').replaceWith("<p class=\"inner company\" style='background-color: aqua'>"+data.description+"</p>");
-            */
+            $('div.jumbotron').replaceWith("No more offers for you"); }
         }
     </script>
 {% endblock %}

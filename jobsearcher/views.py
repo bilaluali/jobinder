@@ -261,7 +261,7 @@ def searcher(request):
         profile = None
 
     render_template = "joboffer.html" if is_applicant else "applicant.html"
-    return render(request, "searcher/searcher_"+render_template, {'profile': profile})
+    return render(request, "searcher/searcher_"+render_template, {'profile': profile, 'applicant':is_applicant})
 
 
 def match(request):
@@ -362,5 +362,9 @@ def _ajax_choice(request):
                 'scope': next_applicant.scope.name,
                 'themes': [theme.name for theme in next_applicant.themes.all()]
             }
+            if next_applicant.photo:
+                return_data['photo_src'] = next_applicant.photo.url
+            else:
+                return_data['photo_src'] = '/media/applicant_logos/default.png'
 
     return JsonResponse(return_data)
