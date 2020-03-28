@@ -1,5 +1,17 @@
 {% extends "searcher/searcher.html" %}
+
+{% block header %}
+    {% include 'header_applicant.html' %}
+{% endblock %}
+
 {% block searcher %}
+        <div class="col-sm-12 align-self-center">
+            {% if profile.company.logo %}
+                <img class="img-fluid" src="{{ profile.company.logo.url }}" alt="...">
+            {% else %}
+                <img class="img-fluid" src="/media/company_logos/default.png" alt="...">
+            {% endif %}
+        </div>
         <div class="col-sm-12 align-self-center">
             <p class="inner company" style="background-color: aqua">{{ profile.company }}</p>
         </div>
