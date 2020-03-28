@@ -136,7 +136,7 @@ def get_company_matches(request):
     for like_choice in all_likes_of_company:
         applicant_liked_by_company = like_choice.applicant
         if Choice.objects.filter(applicant_id=applicant_liked_by_company,
-                                 jobOffer__company__id=request.user.id, choice=True).exists():
+                                 jobOffer__company_id=request.user.id, choice=True).exists():
             matches.append(like_choice)
 
     return matches
@@ -231,15 +231,14 @@ def company_info_edit(request, pk):
 @login_required()
 def show_company_insights(request):
     company = get_object_or_404(Company, Q(id=request.user.id))
-    likes = Choice.objects.filter(company__id=request.user.id, choice=True)
-    nopes = Choice.objects.filter(company__id=request.user.id, choice=False)
-
+    likes = Choice.objects.filter(company__id=request.user.id, jobOffer=None, choice=True)
+    nopes = Choice.objects.filter(company__id=request.user.id, jobOffer=None, choice=False)
     context = {'company': company,
                'likes': likes,
                'nopes': nopes,
                'isajax': True if isajax_req(request) else False}
 
-    return render(request, 'profile_company/profile_insights.html', context)
+    return render(request, 'profile_applicant/profile_insights.html', context)
 
 
 @login_required()
@@ -251,6 +250,7 @@ def show_applicant_matches(request):
                'isajax': True if isajax_req(request) else False}
 
     return render(request, 'profile_applicant/profile_matches.html', context)
+
 
 
 def get_applicant_matches(request):
@@ -296,9 +296,8 @@ def applicant_info_edit(request, pk):
 @login_required()
 def show_applicant_insights(request):
     applicant = get_object_or_404(Applicant, Q(id=request.user.id))
-    likes = Choice.objects.filter(applicant__id=request.user.id, choice=True)
-    nopes = Choice.objects.filter(applicant__id=request.user.id, choice=False)
-
+    likes = Choice.objects.filter(applicant__id=request.user.id, company=None, choice=True)
+    nopes = Choice.objects.filter(applicant__id=request.user.id, company=None, choice=False)
     context = {'applicant': applicant,
                'likes': likes,
                'nopes': nopes,
