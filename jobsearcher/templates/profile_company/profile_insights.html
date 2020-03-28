@@ -1,0 +1,4 @@
+{% extends isajax|yesno:"profile_company/ajax_base.html,profile_company/profile_base.html" %}
+{% block profile_block %}
+    {% include 'profile_applicant/insights.html' %}
+{% endblock %}

@@ -22,7 +22,7 @@
                                 </a>
                             </li>
                             <li class="nav-item active mx-2">
-                                <a class="nav-link underline-warn btn-sm text-muted">
+                                <a class="nav-link underline-warn btn-sm text-muted" href="{% url 'searcher' %}">
                                     Navigate
                                 </a>
                             </li>
@@ -83,15 +83,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="insights" class="nav-link active text-muted p-3" href="#">
+                            <a id="insights"  onclick="ajax_profile('{% url 'jobsearcher:applicant_profile_insights' %}','profile_options')"
+                               class="nav-link active text-muted p-3" href="#">
                                 <i class="fas fa-chart-bar mr-2"></i>
                                 Insights
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a id="preferences" class="nav-link active text-muted p-3" href="#">
-                                <i class="fas fa-cog mr-2"></i>
-                                Preferences
                             </a>
                         </li>
                     </ul>
