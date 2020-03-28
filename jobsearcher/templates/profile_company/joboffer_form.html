@@ -41,7 +41,7 @@
                         <label class="font-weight-bold text-muted" for="joboffer_theme">Theme</label>
                         <select name="theme" class="form-control" id="joboffer_theme">
                             {% for theme in form.theme %}
-                                <option>{{ theme }}</option>
+                                <option style="display: none">{{ theme }}</option>
                             {% endfor %}
                         </select>
                     </div>

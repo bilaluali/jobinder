@@ -81,9 +81,9 @@
 
                     <div class="form-group" id="scope" style="display:none">
                         <label class="font-weight-bold" for="company_scope">Scope</label>
-                        <select name="scope" class="form-control" id="company_scope">
+                        <select name="scope" class="form-control selectpicker" id="company_scope">
                             {% for scope_elem in form.scope %}
-                                <option>{{ scope_elem }}</option>
+                                <option style="display: none">{{ scope_elem }}</option>
                             {% endfor %}
                         </select>
 
