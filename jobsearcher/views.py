@@ -122,12 +122,24 @@ def isajax_req(request):
 @login_required()
 def show_matches(request):
     company = get_object_or_404(Company, Q(id=request.user.id))
-    matches = Applicant.objects.all()
+    matches = get_company_matches(request)
     context = {'company': company,
                'matches': matches,
                'isajax': True if isajax_req(request) else False}
 
     return render(request, 'profile_company/profile_matches.html', context)
+
+
+def get_company_matches(request):
+    all_likes_of_company = Choice.objects.filter(company__id=request.user.id, jobOffer=None, choice=True)
+    matches = []
+    for like_choice in all_likes_of_company:
+        applicant_liked_by_company = like_choice.applicant
+        if Choice.objects.filter(applicant_id=applicant_liked_by_company,
+                                 jobOffercompany_id=request.user.id, choice=True).exists():
+            matches.append(like_choice)
+
+    return matches
 
 
 @login_required()
@@ -219,12 +231,25 @@ def company_info_edit(request, pk):
 @login_required()
 def show_applicant_matches(request):
     applicant = get_object_or_404(Applicant, Q(id=request.user.id))
-    matches = Company.objects.all()
+    matches = get_applicant_matches(request)
     context = {'applicant': applicant,
                'matches': matches,
                'isajax': True if isajax_req(request) else False}
 
     return render(request, 'profile_applicant/profile_matches.html', context)
+
+
+
+def get_applicant_matches(request):
+    all_likes_of_applicant = Choice.objects.filter(applicant__id=request.user.id, company=None, choice=True)
+    matches = []
+    for jobOffer_liked in all_likes_of_applicant:
+        company_liked_by_applicant = jobOffer_liked.jobOffer.company
+        if Choice.objects.filter(applicant__id=request.user.id, company=company_liked_by_applicant,
+                                 jobOffer=None, choice=True).exists():
+            matches.append(jobOffer_liked)
+
+    return matches
 
 
 @login_required()
@@ -237,7 +262,7 @@ def applicant_info_edit(request, pk):
         if form.is_valid():
             form.save()
 
-            #Re-login because of password update
+            # Re-login because of password update
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
