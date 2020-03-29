@@ -46,7 +46,7 @@ Without this, the application cannot be used.
     - [x] After register require profile description
 - [ ] Profile section
     - [X] Allow edit profile 
-    - [ ] Show current matches
+    - [X] Show current matches
     - [x] Company: register and modify own Job Offers
 - [x] Search section
     - [x] Implement search algorithm
@@ -60,7 +60,7 @@ Without this, the application cannot be used.
         - [ ] (O) Filter by nearby location
     - [x] Allow 'LIKE' & 'NOPE' users
 - [x] Match applicants-companies
-    - [ ] Show contact data
+    - [X] Show contact data
     - [ ] (O) Send notification to email 
     - [ ] (O) Communication / Chat
 - [X] Predefine scopes and respective themes.
