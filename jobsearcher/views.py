@@ -383,7 +383,7 @@ def _ajax_choice(request):
 
         # Check if it is a match.
         if like_bool:
-            is_match = Choice.objects.filter(company__id=profile.company.id, applicant__id=user_pk, choice=True).exists()
+            is_match = Choice.objects.filter(company__id=profile.company.id, applicant__id=user_pk, jobOffer=None,  choice=True).exists()
         return_data = {'is_match': is_match}
         next_joboffer = query_joboffer_profile(user_pk)
         if next_joboffer:
@@ -406,7 +406,7 @@ def _ajax_choice(request):
         Choice.objects.create(applicant=profile, company=usr, choice=like_bool)
 
         if like_bool:
-            is_match = Choice.objects.filter(company__id=user_pk, applicant__id=profile.id, choice=True).exists()
+            is_match = Choice.objects.filter(jobOffer__company__id=user_pk, applicant__id=profile.id, company=None, choice=True).exists()
         return_data = {'is_match': is_match}
         next_applicant = query_applicant_profile(user_pk)
         if next_applicant:
@@ -417,7 +417,6 @@ def _ajax_choice(request):
                 'name': next_applicant.username,
                 'city': next_applicant.city,
                 'description': next_applicant.description,
-                'scope': next_applicant.scope.name,
                 'themes': [theme.name for theme in next_applicant.themes.all()]
             }
             if next_applicant.photo:
