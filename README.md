@@ -38,13 +38,30 @@ Without this, the application cannot be used.
 
 ![alt-text](media/views.png)
 
+### Usage
+
+1. Clone the repository and execute it
+`python manage.py runserver [port]`
+2. Open the browser with localhost:port.
+3. Now you will be running the application with an empty database. You can register some applicants and companies to interact.
+    1. _bis_ Should you use our database you have to migrate it. 
+    
+    `python manage.py makemigrations jobsearcher`
+    
+    `python manage.py migrate jobsearcher`
+    
+    2. You will have access to admin page with username 'admin'; password 'bruh'.
+    3. Each user, applicant and company, have login details username _username_; password 'bruh1234'.
+4. Now you can interact login into the profile and explore for jobOffers and Applicants!
+
+
 ### TO-DO list
 
 - [x] Login / Register
     - [ ] (O) Email verification
     - [ ] (O) Ask for user first, then password
     - [x] After register require profile description
-- [ ] Profile section
+- [x] Profile section
     - [X] Allow edit profile 
     - [X] Show current matches
     - [x] Company: register and modify own Job Offers
