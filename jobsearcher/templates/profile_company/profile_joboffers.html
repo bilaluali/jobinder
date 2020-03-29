@@ -1,0 +1,98 @@
+{% extends isajax|yesno:"profile_company/ajax_base.html,profile_company/profile_base.html" %}
+{% block profile_block %}
+
+    <div class="col-sm-9">
+        <div class="row mb-5">
+            <div class="col-sm-6 d-inline">
+                <span style="font-size: 24px; color: #eeaa66" class="mr-2">
+                    <i class="fas fa-briefcase"></i>
+                </span>
+                <h5 class="font-weight-bold text-secondary d-inline">JobOffers<sup>{{ joboffers_list | length }}</sup></h5>
+            </div>
+            <div class="col-sm-6 text-right">
+                <a href="{% url 'jobsearcher:joboffer_create' %}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus"></i>
+                    Add
+                </a>
+            </div>
+
+            <div class="col-sm-12 text-muted">
+                {% now "jS F Y H:i" %}
+            </div>
+        </div>
+
+        {% for offer in joboffers_list %}
+            <div style="border-radius: 25px" class="card mb-4 border-0 shadow-sm">
+
+                <div class="row no-gutters align-items-center">
+                    <div class="col-sm-4 col-md-2 border-right text-center">
+                        <img style="height: 40%; width: 40%" class="img-fluid" src="{{ MEDIA_URL }}{{ company.logo.url }}" alt="...">
+                    </div>
+
+                    <div class="col-sm-8 col-md-10">
+
+                        <div class="card-body">
+                            <div class="row no-gutters">
+                                <h6 class="card-title">{{ offer.name }}</h6>
+                                <small class="ml-3">
+                                    <span style="background-color:#fad3d1; color:#e83a30" class="badge">
+                                        {{ offer.theme }}
+                                    </span>
+                                </small>
+                                <small class="ml-auto text-muted">
+                                    {{ offer.last_modified }}
+                                </small>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <p class="card-text">
+                                        <a data-toggle="popover" data-trigger="hover" data-content="{{ offer.description }}">
+                                            <small class="text-muted">{{ offer.description | truncatechars:65 }}</small>
+                                        </a>
+                                    </p>
+                                </div>
+
+                                <div class="col-sm-3 mt-auto text-right">
+                                    <a id="edit" href="#" onclick="ajax_profile('{{ offer.get_absolute_url_edit }}','editForm')" data-target="#editModal" data-toggle="modal" class="btn btn-primary-soft btn-sm rounded-pill">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <a id="delete" href="{{ offer.get_absolute_url_delete }}"  onclick="return confirm('Are you sure?')" class="btn btn-primary-soft btn-sm rounded-pill">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title px-3">Edit</h5>
+                    <a type="button" href="{% url 'jobsearcher:company_profile_joboffers' %}">
+                        <i class="btn btn-danger far fa-window-close"></i>
+                    </a>
+                </div>
+                <div id="editForm" class="modal-body">
+                </div>
+
+            </div>
+        </div>
+
+        <script id="popover_script" type="text/javascript">
+            $(document).ready(function () {
+                $('[data-toggle="popover"]').popover();
+            });
+        </script>
+    </div>
+
+{% endblock %}
+

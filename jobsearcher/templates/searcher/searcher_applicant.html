@@ -1,0 +1,56 @@
+{% extends "searcher/searcher.html" %}
+
+{% block header %}
+    {% include 'header_company.html' %}
+{% endblock %}
+
+{% block searcher %}
+            <div style="border-radius: 25px" class="card border-0 shadow-sm">
+
+            <div class="row p-4">
+                <div class="col-sm-4">
+                    {% if profile.photo %}
+                        <img id="profile-img" class="img-thumbnail rounded-circle" src="{{ profile.photo.url }}" alt="...">
+                    {% else %}
+                        <img id="profile-img" class="img-thumbnail rounded-circle" src="/media/applicant_logos/default.png" alt="...">
+                    {% endif %}
+                </div>
+
+                <div id='themes' class="col-sm-8 text-right">
+                    {% for theme in profile.themes.all %}
+                        <span style="background-color:#fad3d1; color:#e83a30" class="badge">
+                            {{ theme }}
+                        </span>
+                    {% endfor %}
+                </div>
+                <div class="col-12 p-4">
+                    <h6 id="title" class="card-title montserrat">{{ profile.username }}, {{ profile.city }}</h6>
+                    <p class="card-text text-justify">
+                        <small id="description" class="text-muted">
+                            {{ profile.description }}
+                        </small>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        function change(data) {
+            if ('id' in data) {
+                $('#current').css({'left':'', 'opacity':''});
+                $('#profile-img').attr('src', data.photo_src);
+                let themes_html = '<div id="themes" class="col-sm-8 text-right">';
+                Array.prototype.forEach.call(data.themes, theme => {
+                    themes_html += '<span style="background-color:#fad3d1; color:#e83a30" class="badge">'+theme+'</span>';
+                });
+                $('#themes').replaceWith(themes_html);
+                $('#title').replaceWith('<h6 id="title" class="card-title montserrat">'+
+                    data.name + ', '+data.city+'</h6>');
+                $('#description').text(data.description);
+            } else {
+            $('div.jumbotron').replaceWith("No more offers for you"); }
+        }
+    </script>
+{% endblock %}

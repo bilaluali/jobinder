@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'CSS/animated_search.css' %}">
+    {% block header %}{% endblock %}
+    <div style="min-height: 100vh" class="jumbotron text-center">
+    {% if profile %}
+        <div id="current" class="row profile-container">
+            <div class="col-sm-12">
+                {% block searcher %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center button-container">
+            <div class="col-sm-5 d-flex justify-content-center">
+                <button id="but-like" class="btn btn-outline-success w-75 like">
+                    Like
+                </button>
+            </div>
+            <div class="col-sm-5 d-flex justify-content-center">
+                <button id="but-nope" class="btn btn-outline-danger w-75 nope">
+                    Nope
+                </button>
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center">
+            It seems you saw all the offers! You should wait for your answer...
+        </p>
+    {% endif %}
+    </div>
+    <script type="text/javascript">
+        let profile_id = "{{ profile.id }}";
+        let user_id = {{ user.id }};
+        $("button.like").on('click', function() {
+            $('.profile-container').animate({
+                left: '-=100px',
+                opacity: 0,
+            }, function () {
+                $.ajax({
+                url: '{% url "ajax_search_button" %}',
+                data: {
+                    'profile': profile_id,
+                    'user': user_id,
+                    'choice': true
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.is_match) {
+                        if (confirm("You've got a match! Do you want to contact right now?")) {
+                            {% if applicant %}
+                                location.href='{% url 'jobsearcher:applicant_profile_matches' %}';
+                            {% else %}
+                                location.href='{% url 'jobsearcher:company_profile_matches' %}';
+                            {% endif %}
+                        }
+                    }
+                    profile_id = data.id;
+                    change(data);
+                },
+            });
+            });
+        });
+        $("button.nope").on('click', function() {
+            $('.profile-container').animate({
+                left: '+=100px',
+                opacity: 0,
+            }, function () {
+                $.ajax({
+                url: '{% url "ajax_search_button" %}',
+                data: {
+                    'profile': profile_id,
+                    'user': user_id,
+                    'choice': false
+                },
+                dataType: 'json',
+                success: function (data) {
+                    profile_id = data.id;
+                    change(data)
+                },
+            });
+            });
+        });
+    </script>
+    {% block javascript %}{% endblock %}
+{% endblock %}

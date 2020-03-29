@@ -1,0 +1,52 @@
+{% extends "searcher/searcher.html" %}
+
+{% block header %}
+    {% include 'header_applicant.html' %}
+{% endblock %}
+
+{% block searcher %}
+    <div style="border-radius: 25px" class="card border-0 shadow-sm">
+
+        <div class="row p-4">
+                <div class="col-sm-4">
+                    {% if profile.company.logo %}
+                        <img id="profile-img" class="card-img-top" src="{{ profile.company.logo.url }}" alt="...">
+                    {% else %}
+                        <img id="profile-img" class="card-img-top" src="/media/company_logos/default.png" alt="...">
+                    {% endif %}
+                </div>
+
+                <div id='themes' class="col-sm-8 text-right">
+                    <span style="background-color:#fad3d1; color:#e83a30" class="badge">
+                            {{ profile.theme }}
+                    </span>
+                </div>
+                <div class="col-12 p-4">
+                    <h6 id="title" class="card-title montserrat">{{ profile.name }} - {{ profile.company.username }}, {{ profile.city }}</h6>
+                    <p class="card-text text-justify">
+                        <small id="description" class="text-muted">
+                            {{ profile.description }}
+                        </small>
+                    </p>
+                </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        function change(data) {
+            if ('id' in data) {
+                $('#current').css({'left':'', 'opacity':''});
+                $('#profile-img').attr('src', data.photo_src);
+                $('#title').replaceWith('<h5 it="title" class="card-title montserrat">'+data.name+
+                        ' - '+data.company+', '+data.city+'</h5>');
+                $('#themes').replaceWith('<small id="themes" class="ml-3">' +
+                    '<span style="background-color:#fad3d1; color:#e83a30" class="badge">' +
+                    data.theme+'</span></small>');
+                $('#description').text(data.description);
+            } else {
+                $('div.jumbotron').replaceWith("No more offers for you");
+            }
+        }
+    </script>
+{% endblock %}

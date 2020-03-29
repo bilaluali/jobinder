@@ -40,22 +40,30 @@ Without this, the application cannot be used.
 
 ### TO-DO list
 
-- [ ] Login / Register
+- [x] Login / Register
     - [ ] (O) Email verification
     - [ ] (O) Ask for user first, then password
-    - [ ] After register require profile description
+    - [x] After register require profile description
 - [ ] Profile section
-    - [ ] Allow edit profile 
-    - [ ] Show current matches
-    - [ ] Company: register and modify own Job Offers
-- [ ] Search section
-    - [ ] Implement search algorithm
-    - [ ] Allow 'LIKE' & 'NOPE' users
-- [ ] Match applicants-companies
-    - [ ] Show contact data
+    - [X] Allow edit profile 
+    - [X] Show current matches
+    - [x] Company: register and modify own Job Offers
+- [x] Search section
+    - [x] Implement search algorithm
+        - [ ] (O) Show again repeated profiles in 1 week
+        - [ ] (O) Filter by nearby location
+    - [x] Allow 'LIKE' & 'NOPE' users
+    - [x] Company: register and modify own Job Offers
+- [x] Search section
+    - [x] Implement search algorithm
+        - [ ] (O) Show again repeated profiles in 1 week
+        - [ ] (O) Filter by nearby location
+    - [x] Allow 'LIKE' & 'NOPE' users
+- [x] Match applicants-companies
+    - [X] Show contact data
     - [ ] (O) Send notification to email 
     - [ ] (O) Communication / Chat
-- [ ] Predefine scopes and respective themes.
+- [X] Predefine scopes and respective themes.
 
 
 

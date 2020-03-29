@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_block %}
+
+    {% include 'header_company.html' %}
+
+    {% if user.is_authenticated %}
+
+
+        <section style="min-height: 100vh" class="bg-gradient">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-sm-12 text-center py-5 mt-5">
+                        <h1 class="text-white mb-3">Let's like some seekers.</h1>
+                        <h5 class="text-white mb-5">Finding seekers has never been so easy<br>Press and explore.</h5>
+                        <div id="navigate_link">
+                            <a class="btn btn-warning text-white" href="{% url 'searcher' %}">Explore</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    {% else %}
+
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row align-items-center py-5 mb-5">
+                    <div class="col-sm-12 col-md-6 p-3">
+                        <h2>
+                            Find job seekers <span class="warn">fit your</span> business scope in few swipes.
+                        </h2>
+                        <p style="line-height: 1.6" class="text-muted mb-6 mt-3">
+                            Navigate only through job seekers according your scope easily.
+                            <br>Match and contact them.
+                        </p>
+                        <div class="mt-5" id="login_link">
+                            <a class="btn btn-secondary" href="{% url 'sign_up_company' %}">Get Started</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <img src="{% static "images/swipe.svg" %}" class="img-fluid">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 p-5">
+                        <div class="mb-3 text-secondary">
+                            <span style="font-size: 30px;">
+                                <i class="fas fa-link"></i>
+                            </span>
+                        </div>
+                        <h5>Job seekers and employers</h5>
+                        <p class="text-muted text-justify mb-5">
+                            We want match job seekers and employers directly. After a couple of likes
+                            and getting a match, you're able to chat or see contact data. No form applies.
+                            No signups. No fuss.
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12 col-md-4 p-5">
+                        <div class="mb-3 text-secondary">
+                            <span style="font-size: 30px;">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                        <h5>Browse jobs seekers</h5>
+                        <p class="text-muted text-justify mb-5">
+                            Search in jobinder is embarrassingly easy. Swipe job seekers liking or noping them.
+                            Job seekers will like your company, get a match and see each other contact details.
+                        </p>
+                    </div>
+
+                    <div class="col-sm-12 col-md-4 p-5">
+                        <div class="mb-3 text-secondary">
+                            <span style="font-size: 30px;">
+                                <i class="fas fa-filter"></i>
+                            </span>
+                        </div>
+                        <h5>Intelligent filters</h5>
+                        <p class="text-muted text-justify mb-5">
+                            Visualize only seekers fit with your business scope. Our algorithm will filter automatically
+                            by your scopes and specialities, showing you the best seekers fit you. No worries and fun.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container-fluid" style="background-color: #EFF0F3">
+            <div class="container py-5">
+                <div class="row align-items-center">
+                    <div class="col-sm-12 col-md-6">
+                        <h6 class="font-weight-bold text-secondary">EMPLOYERS</h6>
+                        <h4 id="text-writer"></h4>
+                        <p class="text-muted">Start now! Swipe through thousands of seekers from your business
+                            scope.</p>
+                        <a class="btn btn-primary" href="#">Post</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <img src="{% static "images/seekers.svg" %}" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    {% endif %}
+
+    <script type="text/javascript" src="{% static 'JS/type_writer.js' %}"></script>
+
+{% endblock %}
