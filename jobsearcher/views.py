@@ -95,6 +95,7 @@ def sign_up_applicant(request):
 
         if form.is_valid():
             form.save()
+            form.save_m2m()
             return redirect(reverse('home'))
     else:
         form = ApplicantForm()
@@ -137,8 +138,7 @@ def get_company_matches(request):
         applicant_liked_by_company = like_choice.applicant
         if Choice.objects.filter(applicant_id=applicant_liked_by_company,
                                  jobOffer__company_id=request.user.id, choice=True).exists():
-            matches.append(like_choice)
-
+            matches.append(applicant_liked_by_company)
     return matches
 
 
@@ -245,6 +245,7 @@ def show_company_insights(request):
 def show_applicant_matches(request):
     applicant = get_object_or_404(Applicant, Q(id=request.user.id))
     matches = get_applicant_matches(request)
+    print(matches)
     context = {'applicant': applicant,
                'matches': matches,
                'isajax': True if isajax_req(request) else False}
@@ -260,7 +261,7 @@ def get_applicant_matches(request):
         company_liked_by_applicant = jobOffer_liked.jobOffer.company
         if Choice.objects.filter(applicant__id=request.user.id, company=company_liked_by_applicant,
                                  jobOffer=None, choice=True).exists():
-            matches.append(jobOffer_liked)
+            matches.append((jobOffer_liked.jobOffer, company_liked_by_applicant))
 
     return matches
 
@@ -274,6 +275,7 @@ def applicant_info_edit(request, pk):
 
         if form.is_valid():
             form.save()
+            form.save_m2m()
 
             # Re-login because of password update
             username = form.cleaned_data['username']

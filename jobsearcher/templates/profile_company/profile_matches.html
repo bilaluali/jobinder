@@ -15,49 +15,67 @@
             </div>
         </div>
         <div class="row">
-        {% for match in matches %}
+            {% for match in matches %}
 
-            <div class="col-sm-6 col-lg-4 px-4 py-4">
-                <div class="card border-0 shadow-sm" >
-                    <div class="row card-body">
-                        <div class="col-sm-4 pr-1">
-                            {% if match.photo %}
+                <div class="col-sm-6 col-lg-4 px-4 py-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="row card-body">
+                            <div class="col-sm-4 pr-1">
                                 <img src="{{ MEDIA_URL }}{{ match.photo.url }}" class="img-thumbnail" alt="...">
-                            {% else %}
-                                <img src="{{ MEDIA_URL }}{{ default.url }}" class="img-thumbnail" alt="...">
-                            {% endif %}
-                        </div>
-                        <div class="col-sm-8 pt-2">
-                            <h6 class="font-weight-bold mb-0">{{ match.first_name }} {{ match.last_name }}</h6>
-                            {% for theme in match.themes.all %}
-                                <small>
+                            </div>
+                            <div class="col-sm-8 pt-2">
+                                <h6 class="font-weight-bold mb-0">{{ match.first_name }} {{ match.last_name }}</h6>
+                                {% for theme in match.themes.all %}
+                                    <small>
                                     <span style="background-color:#faddd1; color:#e86830" class="badge">
                                         {{ theme }}
                                     </span>
+                                    </small>
+                                {% endfor %}
+                            </div>
+
+                            <div class="col-sm-12 my-2">
+                                <small class="text-muted">
+                                    {% if match.city %}
+                                        {{ match.city }}
+                                    {% else %}
+                                        Somewhere
+                                    {% endif %}
                                 </small>
-                            {% endfor %}
-                        </div>
+                            </div>
 
-                        <div class="col-sm-12 my-2">
-                            <small class="text-muted">
-                                {{ match.city }}
-                                <br>
-                                <i class="fas fa-link text-primary"></i>
-                                Business Intelligence Junior
-                            </small>
-                        </div>
+                            <div class="col-sm-4 pr-1">
+                                <button style="background-color: #EFF0F3" type="button"
+                                        class="btn btn-light pl-1 btn-sm btn-block"
+                                        data-toggle="popover" title="Description"
+                                        data-content="{{ match.description }}">
+                                    <i class="fas fa-plus text-primary"></i>
+                                </button>
+                            </div>
 
-                        <div class="col-sm-12">
-                            <button style="background-color: #EFF0F3" type="button" class="btn btn-light btn-sm btn-block">Contact</button>
+                            <div class="col-sm-8 pl-1">
+                                <button style="background-color: #EFF0F3" type="button"
+                                        class="btn btn-light btn-sm btn-block" data-toggle="popover"
+                                        title="Contact detail"
+                                        data-html="true"
+                                        data-content="<br />Email: {{ match.email }} <br /> <br />Phone: {{ match.telephone }}<br />">
+                                    Contact
+                                </button>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <script id="popover_script" type="text/javascript">
+                    $(document).ready(function () {
+                        $('[data-toggle="popover"]').popover();
+                    });
+                </script>
 
-
-        {% endfor %}
+            {% endfor %}
         </div>
+
     </div>
-    
+
 {% endblock %}
